@@ -386,7 +386,7 @@ namespace DatabasePackage
             {
                 if (oReader.Read())
                 {
-                    id = oReader.GetInt32(1);
+                    id = oReader.GetInt32(0);
                 }
             }
             return id;
@@ -722,7 +722,7 @@ namespace DatabasePackage
             int mainMultiplicator=0;
             string desc = "";
             string active = "";
-
+            bool b = true;
 
             using (SqlDataReader oReader = command1.ExecuteReader())
             {
@@ -732,30 +732,34 @@ namespace DatabasePackage
                     desc = oReader.GetString(0);
                     active = oReader.GetString(1);
                     mainMultiplicator = oReader.GetInt32(2);
-                    
+                    makeConsoleLog("desc: " + desc + ", active: " + active + ", main multi: " + mainMultiplicator.ToString());
                 }
             }
-
-            string commandText2 = " select moduleDescriptor, descriptor, multpicator from subRecommendators where moduleDescriptor='" + desc+"'";
-            SqlCommand command2 = new SqlCommand(commandText2, cnn);
-            command2.CommandType = CommandType.Text;
             LinkedList<int> vals = new LinkedList<int>();
             LinkedList<string> descs = new LinkedList<string>();
-            using (SqlDataReader oReader = command1.ExecuteReader())
+            if (desc != "")
             {
-
-                while(oReader.Read())
+                string commandText2 = " select moduleDescriptor, descriptor, multpicator from subRecommendators where moduleDescriptor='" + desc + "'";
+                SqlCommand command2 = new SqlCommand(commandText2, cnn);
+                command2.CommandType = CommandType.Text;
+                
+                using (SqlDataReader oReader = command2.ExecuteReader())
                 {
-                    string desc2 = oReader.GetString(1);
-                    int multip = oReader.GetInt32(2);
-                    vals.AddLast(multip);
-                    descs.AddLast(desc2);
+
+                    while (oReader.Read())
+                    {
+                        string desc2 = oReader.GetString(1);
+                        int multip = oReader.GetInt32(2);
+                        makeConsoleLog("desc: " + desc + ", subdescriptor: " + desc2 + ", sub multi: " + multip.ToString());
+                        vals.AddLast(multip);
+                        descs.AddLast(desc2);
+                    }
                 }
-            }
-            bool b = true;
-            if(active.ToLower() !="y")
-            {
-                b = false;
+                
+                if (active.ToLower() != "y")
+                {
+                    b = false;
+                }
             }
             return new ScoreModuleInfo(mainMultiplicator, desc, descs, vals,b);
 
@@ -804,7 +808,7 @@ namespace DatabasePackage
 
         LinkedList<Author> IRecommendationsGetters.getBookAuthors(Book book)
         {
-            string commandText = "select AuthorName, AuthorLastName, id_author from Authors join AuthorsList on Authors.id_author = AuthorsList.id_author where id_book=@book_id";
+            string commandText = "select AuthorName, AuthorLastName, Authors.id_author from Authors join AuthorsList on Authors.id_author = AuthorsList.id_author where id_book=@book_id";
 
             SqlCommand command2 = new SqlCommand(commandText, cnn);
             command2.Parameters.AddWithValue("@book_id", book.id);
