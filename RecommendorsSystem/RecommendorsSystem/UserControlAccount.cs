@@ -155,11 +155,12 @@ namespace RecommendorsSystem
             labelTitle.Text = "Rated books";
         }
 
-
+        /*
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             
         }
+        */
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
         {
             if (comboBox1.SelectedIndex != -1)
