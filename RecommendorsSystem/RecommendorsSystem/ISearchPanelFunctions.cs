@@ -8,14 +8,14 @@ namespace RecommendorsSystem
 {
     public interface ISearchPanelFunctions
     {
-        LinkedList<Book> searchByAuthor(string authors);
-        LinkedList<Book> searchByTitle(string title);
-        void buyBook(Book bookToBuy);
-        void setBookRate( Book bookToRate, int rate);
-        int getBookRate(Book book);
-        void unrateBook(Book bookToUnrate);
-        void saveBookInToBuy(Book bookToBeBoughtInFuture);
-        void viewBook(Book bookToView);
+        LinkedList<BookWithAuthors> searchByAuthor(string authors);
+        LinkedList<BookWithAuthors> searchByTitle(string title);
+        void buyBook(BookGeneralData bookToBuy);
+        void setBookRate( BookGeneralData bookToRate, int rate);
+        int getBookRate(BookGeneralData book);
+        void unrateBook(BookGeneralData bookToUnrate);
+        void saveBookInToBuy(BookGeneralData bookToBeBoughtInFuture);
+        void viewBook(BookGeneralData bookToView);
         LinkedList<BookWithAuthorsAndScore> askForRecommendations();
         //void goToAccount();
     }

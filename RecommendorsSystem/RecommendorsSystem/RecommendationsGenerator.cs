@@ -36,13 +36,14 @@ namespace RecommendorsSystem
 
         public LinkedList<BookWithAuthorsAndScore> generateRecommendations(CurrentUser user)
         {
-            LinkedList<Book> AllBooksWithAuthors = recommendationsFunctions.getAllBookWithAuthors(user);
+            LinkedList<BookWithAuthors> AllBooksWithAuthors = recommendationsFunctions.getAllBookWithAuthors(user);
             BookWithAuthorsAndScore[] booksWithAuthoresAndScore = new BookWithAuthorsAndScore[AllBooksWithAuthors.Count];
             int i = 0;
             foreach (Book book in AllBooksWithAuthors)
             {
-                BookWithAuthorsAndScore bookAuScr = new BookWithAuthorsAndScore(book as BookWithAuthors);
-                bookAuScr.Score = calculateScoreForBook(book as BookWithAuthors, user);
+                //BookWithAuthorsAndScore bookAuScr = new BookWithAuthorsAndScore(book as BookWithAuthors);
+                BookWithAuthorsAndScore bookAuScr = new Book(book);
+                bookAuScr.Score = calculateScoreForBook(book, user);
                 booksWithAuthoresAndScore[i++] = bookAuScr;
             }
             return buildScoreSortedBooksList(booksWithAuthoresAndScore);

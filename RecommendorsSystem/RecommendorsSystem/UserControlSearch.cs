@@ -31,7 +31,7 @@ namespace RecommendorsSystem
                 return cellSelected() && dgv.CurrentCell.Value != null;
             }
             
-            public void fillWithSearchResults(LinkedList<Book> books)
+            public void fillWithSearchResults(LinkedList<BookWithAuthors> books)
             {
                 dgv.Rows.Clear();
                 dgv.Columns[2].Visible = false;
@@ -61,8 +61,8 @@ namespace RecommendorsSystem
                 foreach (BookWithAuthorsAndScore b in books)
                 {
                     int score = b.Score;
-                    BookInfoContainer bookTitle = new BookContainerTitle(b);
-                    BookInfoContainer bookAuthor = new BookContainerAuthors(b);
+                    BookInfoContainer bookTitle = new BookContainerTitle(b as Book);
+                    BookInfoContainer bookAuthor = new BookContainerAuthors(b as Book);
 
                     BookInfoContainer bookScore = new BookContainerScore(score, b);
                     dgv.Rows.Add(bookTitle, bookAuthor, bookScore);
@@ -71,13 +71,13 @@ namespace RecommendorsSystem
                 
             }
 
-            public Book getSelectedBook()
+            public BookWithAuthors getSelectedBook()
             {
                 if (cellSelectedAndContainsValue())
                 {
                     try
                     {
-                        Book toReturn = (dgv.CurrentCell.Value as BookInfoContainer).book;
+                        BookWithAuthors toReturn = (dgv.CurrentCell.Value as BookInfoContainer).book;
                         return toReturn;
                     }
                     catch (Exception e)
@@ -132,7 +132,7 @@ namespace RecommendorsSystem
         {
             
 
-            LinkedList<Book> results;//=new LinkedList<Book>();
+            LinkedList<BookWithAuthors> results;//=new LinkedList<Book>();
             string searchPhrase = textBoxSearch.Text;
             if(comboBoxTitleAuthor.SelectedIndex==0)
             {
@@ -191,7 +191,7 @@ namespace RecommendorsSystem
                 return;
             }
 
-            Book currentBook = guiManager.getSelectedBook();
+            BookGeneralData currentBook = guiManager.getSelectedBook();
             if (currentBook != null)
             {
                 int currentBookRate = searchFunctions.getBookRate(currentBook);
@@ -218,7 +218,7 @@ namespace RecommendorsSystem
         */
         private void comboBoxRate_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Book currentBook = guiManager.getSelectedBook();
+            BookGeneralData currentBook = guiManager.getSelectedBook();
             if(currentBook!=null)
             {
                 if(comboBoxRate.SelectedIndex==0)
@@ -234,7 +234,7 @@ namespace RecommendorsSystem
 
         private void buttonSaveInToBuy_Click(object sender, EventArgs e)
         {
-            Book currentBook = guiManager.getSelectedBook();
+            BookWithAuthors currentBook = guiManager.getSelectedBook();
             if(currentBook!=null)
             {
                 searchFunctions.saveBookInToBuy(currentBook);
@@ -243,7 +243,7 @@ namespace RecommendorsSystem
 
         private void buttonViewBook_Click(object sender, EventArgs e)
         {
-            Book currentBook = guiManager.getSelectedBook();
+            BookWithAuthors currentBook = guiManager.getSelectedBook();
             if(currentBook!=null)
             {
                 searchFunctions.viewBook(currentBook);

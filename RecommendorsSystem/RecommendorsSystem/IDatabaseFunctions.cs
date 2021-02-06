@@ -21,34 +21,34 @@ namespace RecommendorsSystem
         LinkedList<string> getAllCategories();
         LinkedList<string> getLikedCategories(CurrentUser user);
         //bool checkIfCredentialsAreValid(string login, string password);
-        LinkedList<Book> findBooksByTitle(string title, CurrentUser user);
-        LinkedList<Book> findBooksByAuthor(string authors, CurrentUser user);
-        int getBookRate(Book currentBook, CurrentUser user);
-        LinkedList<Book> getAllBookWithAuthors(CurrentUser user);
+        LinkedList<BookWithAuthors> findBooksByTitle(string title, CurrentUser user);
+        LinkedList<BookWithAuthors> findBooksByAuthor(string authors, CurrentUser user);
+        int getBookRate(BookGeneralData currentBook, CurrentUser user);
+        LinkedList<BookWithAuthors> getAllBookWithAuthors(CurrentUser user);
     }
     public interface IRecommendationsGetters :IDatabaseGetters
     {
-        int getNoOfSimilarBooksViewedWithinHalfAnHour(Book book, CurrentUser user);
-        LinkedList<string> getBookCategories(Book book);
-        LinkedList<Author> getBookAuthors(Book book);
-        LinkedList<Bonus> getBonusFromAdmin(BookWithAuthors book);
-        int getNewBooksBonus(BookWithAuthors book);
+        int getNoOfSimilarBooksViewedWithinHalfAnHour(BookGeneralData book, CurrentUser user);
+        LinkedList<string> getBookCategories(BookGeneralData book);
+        LinkedList<Author> getBookAuthors(BookGeneralData book);
+        LinkedList<Bonus> getBonusFromAdmin(BookGeneralData book);
+        int getNewBooksBonus(BookGeneralData book);
         LinkedList<UserRatesInfoSet> getAllRowsInRates();
-        LinkedList<BookWithAuthors> getBooksWithAuthorsSearchedWithin05hour(CurrentUser user);
+        LinkedList<BookGeneralData> getBooksWithGeneralDataWithin05hour(CurrentUser user);
         LinkedList<Book> getBooksRecommendedWithin05h(CurrentUser user);
     }
 
 
     public interface IDatabaseSetters
     {
-        void setRate(Book book, CurrentUser user, int rate);
-        void unrate(Book book, CurrentUser user);
-        void saveBookInToBuy(Book book, CurrentUser user);
-        void removeBookfromToBuy(Book book, CurrentUser user);
-        void buyBook(Book book, CurrentUser user);
+        void setRate(BookGeneralData book, CurrentUser user, int rate);
+        void unrate(BookGeneralData book, CurrentUser user);
+        void saveBookInToBuy(BookGeneralData book, CurrentUser user);
+        void removeBookfromToBuy(BookGeneralData book, CurrentUser user);
+        void buyBook(BookGeneralData book, CurrentUser user);
         void addCategoryToLiked(string category, CurrentUser user);
         void removeCategoryFromLiked(string category, CurrentUser user);
-        void viewBook(Book book, CurrentUser user);
+        void viewBook(BookGeneralData book, CurrentUser user);
     }
     public interface IAuthenticationFunctions
     {

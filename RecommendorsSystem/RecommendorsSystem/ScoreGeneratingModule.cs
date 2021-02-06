@@ -11,7 +11,7 @@ namespace RecommendorsSystem
         //protected CurrentUser user;
         public ScoreGeneratingModule(/*CurrentUser user*/) { /*this.user = user;*/ }
         public ScoreModuleInfo ModuleInfo{ get; set; }
-        public abstract int calculateScore(IRecommendationsGetters dbPackingClass, BookWithAuthors book, CurrentUser user);
+        public abstract int calculateScore(IRecommendationsGetters dbPackingClass, BookGeneralData book, CurrentUser user);
         public abstract string getDescriptor();
     }
 
@@ -20,7 +20,7 @@ namespace RecommendorsSystem
     public class ViewingHistoryModule :ScoreGeneratingModule
     {
         public ViewingHistoryModule(/*CurrentUser user*/) : base(/*user<fix>*/) { }
-        public override int calculateScore(IRecommendationsGetters dbPackingClass, BookWithAuthors book,CurrentUser user)
+        public override int calculateScore(IRecommendationsGetters dbPackingClass, BookGeneralData book,CurrentUser user)
         {
             if (!ModuleInfo.Active)
             {
@@ -37,7 +37,7 @@ namespace RecommendorsSystem
     public class LikedCategoriesModule : ScoreGeneratingModule
     {
         public LikedCategoriesModule(/*CurrentUser user*/) : base(/*user*/) { }
-        public override int calculateScore(IRecommendationsGetters dbPackingClass, BookWithAuthors book, CurrentUser user)
+        public override int calculateScore(IRecommendationsGetters dbPackingClass, BookGeneralData book, CurrentUser user)
         {
             if(ModuleInfo.Active)
             {   
@@ -64,7 +64,7 @@ namespace RecommendorsSystem
 
     class FunctionsUtils
     {
-        public static int countSameCategoriesBooks(Book book, LinkedList<Book> boughtBooks, IRecommendationsGetters dbPackingClass)
+        public static int countSameCategoriesBooks(BookGeneralData book, LinkedList<Book> boughtBooks, IRecommendationsGetters dbPackingClass)
         {
             int totalSimilarCategsCount = 0;
             LinkedList<string> thisBookCategs = dbPackingClass.getBookCategories(book);
@@ -84,7 +84,7 @@ namespace RecommendorsSystem
             return totalSimilarCategsCount;
         }
 
-        public static int countAllSameAuthors(Book thisBook, LinkedList<Book> Books, IRecommendationsGetters dbPackingClass)
+        public static int countAllSameAuthors(BookGeneralData thisBook, LinkedList<Book> Books, IRecommendationsGetters dbPackingClass)
         {
             LinkedList<Author> thisBookAuthors = dbPackingClass.getBookAuthors(thisBook);
 
@@ -96,7 +96,7 @@ namespace RecommendorsSystem
             }
             return totalAuthorCount;
         }
-        public static int countAuthors(Book boughtBook, LinkedList<Author> thisBookAuthors, IRecommendationsGetters dbPackingClass)
+        public static int countAuthors(BookGeneralData boughtBook, LinkedList<Author> thisBookAuthors, IRecommendationsGetters dbPackingClass)
         {
             LinkedList<Author> boughtBookAuthors = dbPackingClass.getBookAuthors(boughtBook);
             int authcount = 0;
@@ -118,7 +118,7 @@ namespace RecommendorsSystem
     public class BoughtBooksModule : ScoreGeneratingModule
     {
         public BoughtBooksModule(/*CurrentUser user*/) : base(/*user*/) { }
-        public override int calculateScore(IRecommendationsGetters dbPackingClass, BookWithAuthors book, CurrentUser user)
+        public override int calculateScore(IRecommendationsGetters dbPackingClass, BookGeneralData book, CurrentUser user)
         {
             if (!ModuleInfo.Active)
             {
@@ -173,7 +173,7 @@ namespace RecommendorsSystem
     public class BooksToBuyModule : ScoreGeneratingModule
     {
         public BooksToBuyModule(/*CurrentUser user*/) : base(/*user*/) { }
-        public override int calculateScore(IRecommendationsGetters dbPackingClass, BookWithAuthors book, CurrentUser user)
+        public override int calculateScore(IRecommendationsGetters dbPackingClass, BookGeneralData book, CurrentUser user)
         {
             if(ModuleInfo.Active)
             {
@@ -241,7 +241,7 @@ namespace RecommendorsSystem
          */
 
         public RatesModule(/*CurrentUser user*/) : base(/*user*/) { }
-        public override int calculateScore(IRecommendationsGetters dbPackingClass, BookWithAuthors book, CurrentUser user)
+        public override int calculateScore(IRecommendationsGetters dbPackingClass, BookGeneralData book, CurrentUser user)
         {
             if (ModuleInfo.Active)
             {
@@ -453,7 +453,7 @@ namespace RecommendorsSystem
     public class LatestRecommendationsModule : ScoreGeneratingModule
     {
         public LatestRecommendationsModule(/*CurrentUser user*/) : base(/*user*/) { }
-        public override int calculateScore(IRecommendationsGetters dbPackingClass, BookWithAuthors book, CurrentUser user)
+        public override int calculateScore(IRecommendationsGetters dbPackingClass, BookGeneralData book, CurrentUser user)
         {
             if(ModuleInfo.Active)
             {
@@ -479,13 +479,13 @@ namespace RecommendorsSystem
     {
         public SearchHistoryScoreModule(/*CurrentUser user*/) : base(/*user*/) { }
 
-        public override int calculateScore(IRecommendationsGetters dbPackingClass, BookWithAuthors book, CurrentUser user)
+        public override int calculateScore(IRecommendationsGetters dbPackingClass, BookGeneralData book, CurrentUser user)
         {
             if (ModuleInfo.Active)
             {
-                LinkedList<BookWithAuthors> booksWithAuthors = dbPackingClass.getBooksWithAuthorsSearchedWithin05hour(user);
+                LinkedList<BookGeneralData> books = dbPackingClass.getBooksWithGeneralDataWithin05hour(user);
                 int recentlySearched = 0;
-                foreach (BookWithAuthors b in booksWithAuthors)
+                foreach (BookGeneralData b in books)
                 {
                     if (b.id == book.id)
                     {
@@ -495,7 +495,7 @@ namespace RecommendorsSystem
 
                 int recentlySearchedCategs = 0;
                 LinkedList<string> bookCategs = dbPackingClass.getBookCategories(book);
-                foreach (BookWithAuthors b in booksWithAuthors)
+                foreach (BookWithAuthors b in books)
                 {
                     LinkedList<string> secondBookCategs = dbPackingClass.getBookCategories(b);
                     foreach (string categ in bookCategs)
@@ -523,7 +523,7 @@ namespace RecommendorsSystem
     public class AdminBonusesModule : ScoreGeneratingModule
     {
         public AdminBonusesModule(/*CurrentUser user*/) : base(/*user*/) { }
-        public override int calculateScore(IRecommendationsGetters dbPackingClass, BookWithAuthors book, CurrentUser user)
+        public override int calculateScore(IRecommendationsGetters dbPackingClass, BookGeneralData book, CurrentUser user)
         {
             if(ModuleInfo.Active)
             {
@@ -545,7 +545,7 @@ namespace RecommendorsSystem
     public class NewBooksModule : ScoreGeneratingModule
     {
         public NewBooksModule(/*CurrentUser user*/) : base(/*user*/) { }
-        public override int calculateScore(IRecommendationsGetters dbPackingClass, BookWithAuthors book, CurrentUser user)
+        public override int calculateScore(IRecommendationsGetters dbPackingClass, BookGeneralData book, CurrentUser user)
         {
             if(ModuleInfo.Active)
             {

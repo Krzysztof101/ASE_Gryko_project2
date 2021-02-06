@@ -10,15 +10,15 @@ namespace RecommendorsSystem
         void showRated();
         LinkedList<Book> getBoughtBooks();
         LinkedList<Book> getToBuyBooks();
-        void removeBookFromToBuy(Book bookToRemoveFromToBuy);
-        void buyBook(Book bookToBuy);
+        void removeBookFromToBuy(BookGeneralData bookToRemoveFromToBuy);
+        void buyBook(BookGeneralData bookToBuy);
         LinkedList<Book> getRatedBooks();
-        void setBookRate(Book ratedBook, int rate);
-        void unrateBook(Book ratedBook);
+        void setBookRate(BookGeneralData ratedBook, int rate);
+        void unrateBook(BookGeneralData ratedBook);
         bool passwordCorrect(string password);
         //void logoutAndGoToLogin();
         void deleteAccount(string userPassword);
         void logout();
-        int getBookRate(Book currentBook);
+        int getBookRate(BookGeneralData currentBook);
     }
 }

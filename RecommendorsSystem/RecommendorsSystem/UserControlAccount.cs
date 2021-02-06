@@ -165,7 +165,7 @@ namespace RecommendorsSystem
         {
             if (comboBox1.SelectedIndex != -1)
             {
-                Book ratedBook = getSelectedBook();
+                BookGeneralData ratedBook = getSelectedBook();
                 if (ratedBook == null)
                 {
                     return;
@@ -187,7 +187,7 @@ namespace RecommendorsSystem
 
         private void dataGridViewBooks_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            Book currentBook = getSelectedBook();
+            BookGeneralData currentBook = getSelectedBook();
             if (currentBook != null)
             {
                 int currentBookRate = accountInterfaceObject.getBookRate(currentBook);
@@ -220,13 +220,13 @@ namespace RecommendorsSystem
             
             
         }
-        private Book getSelectedBook()
+        private BookGeneralData getSelectedBook()
         {
             if ( memoryManager.DGVhasSelectedCell())
             {
                 try
                 {
-                    Book toReturn = (dataGridViewBooks.CurrentCell.Value as BookInfoContainer).book;
+                    BookGeneralData toReturn = (dataGridViewBooks.CurrentCell.Value as BookInfoContainer).book;
                     return toReturn;
                 }
                 catch
@@ -252,7 +252,7 @@ namespace RecommendorsSystem
         {
             if(memoryManager.isShowingToBuyBooks() & memoryManager.DGVhasSelectedCell())
             {
-                Book toRemove = getSelectedBook();
+                BookGeneralData toRemove = getSelectedBook();
                 if (toRemove != null)
                 {
                     accountInterfaceObject.removeBookFromToBuy(toRemove);
@@ -265,7 +265,7 @@ namespace RecommendorsSystem
         {
             if (memoryManager.DGVhasSelectedCell())
             {
-                Book toBuy = getSelectedBook();
+                BookGeneralData toBuy = getSelectedBook();
                 if (toBuy != null)
                 {
                     accountInterfaceObject.buyBook(toBuy);

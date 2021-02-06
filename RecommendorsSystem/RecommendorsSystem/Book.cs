@@ -7,35 +7,101 @@ using System.Threading.Tasks;
 
 namespace RecommendorsSystem
 {
-    public class Book
+    public class Book :BookWithAuthors, BookWithScore, BookWithAuthorsAndScore
     {
-        public int id;
-        public string title;
-        public decimal price;
-        public int priceMinusDiscountInProcent=100;
-        
-    }
-    public class Author
-    {
-        public Author()
+        public Book()
         {
-            
+            authors = new LinkedList<Author>();
+            score = 0;
+            id = 0;
+            title = "";
+            price = 0;
+            priceMinusDiscountInProcent = 100;
+        }
+        public Book(BookGeneralData other) :this()
+        {
+            this.setGeneralDataFromOtherBook(other);
+        }
+        public void setGeneralDataFromOtherBook(BookGeneralData otherBook)
+        {
+            id = otherBook.id;
+            title = otherBook.title;
+            price = otherBook.price;
+            priceMinusDiscountInProcent = otherBook.priceMinusDiscountInProcent;
+        }
+        protected LinkedList<Author> authors;
+        protected int score;
+        public int _id;
+        public string _title;
+        public decimal _price;
+        public int _priceMinusDiscountInProcent;
+
+        public int Score { get { return score; } set { score = value; } }
+        public LinkedList<Author> Authors 
+        {
+            set
+            {
+                authors.Clear();
+                foreach (Author a in value)
+                {
+                    Author aa = new Author(a.FirstName, a.LastName, a.Id);
+                    authors.AddLast(aa);
+                }
+
+            }
+            get
+            { return authors; }
+
         }
 
-        public Author(string firstName, string lastName, int id)
-        {
-            this.FirstName = firstName;
-            this.LastName = lastName;
-        }
-        public string FirstName { private set; get; }
-        public string LastName { private set; get; }
-        public int Id { private set; get; }
+        public int id { get { return _id; } set { _id = value; } }
+        public string title { get { return _title; } set { _title = value; } }
+        public decimal price { get { return _price; } set { _price = value; } }
+        public int priceMinusDiscountInProcent { get { return _priceMinusDiscountInProcent; } set { _priceMinusDiscountInProcent = value; } }
     }
-    
+    public interface BookGeneralData
+    {
+        int id { get; set; }
+        string title { get; set; }
+        decimal price { get; set; }
+        int priceMinusDiscountInProcent { get; set; }
+        void setGeneralDataFromOtherBook(BookGeneralData otherBook);
+    }
+
+    public interface BookWithAuthors :BookGeneralData
+    {
+        LinkedList<Author> Authors
+        {
+            set; get;
+        }
+    }
+
+    public interface BookWithScore :BookGeneralData
+    {
+        int Score { get; set; }
+    }
+
+    public interface BookWithAuthorsAndScore :BookWithScore, BookWithAuthors
+    {
+
+    }
+
+    /*
+    public class BookWithAuthorsAndScore : BookWithAuthors
+    {
+        public int Score { get { return score; } set { score = value; } }
+        public BookWithAuthorsAndScore(BookWithAuthors book) : base(book, book.Authors)
+        {
+            Score = 0;
+        }
+    }
+    */
+
+    /*
     public class BookWithAuthors :Book
     {
 
-        private LinkedList<Author> authors;
+        
         public LinkedList<Author> Authors
         {
             set
@@ -62,14 +128,25 @@ namespace RecommendorsSystem
         
 
     }
+    */
 
-    public class BookWithAuthorsAndScore : BookWithAuthors
+
+
+    public class Author
     {
-        public int Score { get; set; }
-        public BookWithAuthorsAndScore(BookWithAuthors book) : base(book, book.Authors)
+        public Author()
         {
-            Score = 0;
+
         }
+
+        public Author(string firstName, string lastName, int id)
+        {
+            this.FirstName = firstName;
+            this.LastName = lastName;
+        }
+        public string FirstName { private set; get; }
+        public string LastName { private set; get; }
+        public int Id { private set; get; }
     }
 
     public class UserRatesInfoSet

@@ -28,7 +28,7 @@ namespace RecommendorsSystem
             return bookstore.recommendationsGenerator.generateRecommendations(bookstore.User);
         }
 
-        public void buyBook(Book bookToBuy)
+        public void buyBook(BookGeneralData bookToBuy)
         {
             bookstore.databaseFunctions.buyBook(bookToBuy, bookstore.User);
         }
@@ -90,7 +90,7 @@ namespace RecommendorsSystem
         }
         */
 
-        public int getBookRate(Book currentBook)
+        public int getBookRate(BookGeneralData currentBook)
         {
             return bookstore.databaseFunctions.getBookRate(currentBook, bookstore.User);
         }
@@ -158,7 +158,7 @@ namespace RecommendorsSystem
 
 
 
-        public void removeBookFromToBuy(Book bookToRemoveFromToBuy)
+        public void removeBookFromToBuy(BookGeneralData bookToRemoveFromToBuy)
         {
             bookstore.databaseFunctions.removeBookfromToBuy(bookToRemoveFromToBuy, bookstore.User);
         }
@@ -168,12 +168,12 @@ namespace RecommendorsSystem
             bookstore.databaseFunctions.removeCategoryFromLiked(categoryToRemove,bookstore.User);
         }
 
-        public void saveBookInToBuy(Book bookToBeBoughtInFuture)
+        public void saveBookInToBuy(BookGeneralData bookToBeBoughtInFuture)
         {
             bookstore.databaseFunctions.saveBookInToBuy(bookToBeBoughtInFuture, bookstore.User);
         }
 
-        public LinkedList<Book> searchByAuthor(string searchPhrase)
+        public LinkedList<BookWithAuthors> searchByAuthor(string searchPhrase)
         {
             string onlyLettersPhrase = getRidOfNoise(searchPhrase);
             /*
@@ -242,12 +242,12 @@ namespace RecommendorsSystem
             */
         }
 
-        public LinkedList<Book> searchByTitle(string title)
+        public LinkedList<BookWithAuthors> searchByTitle(string title)
         {
             return bookstore.databaseFunctions.findBooksByTitle(title, bookstore.User);
         }
 
-        public void setBookRate(Book ratedBook, int rate)
+        public void setBookRate(BookGeneralData ratedBook, int rate)
         {
             bookstore.databaseFunctions.setRate(ratedBook,bookstore.User, rate);
         }
@@ -259,7 +259,7 @@ namespace RecommendorsSystem
 
         
 
-        public void viewBook(Book bookToView)
+        public void viewBook(BookGeneralData bookToView)
         {
             bookstore.databaseFunctions.viewBook(bookToView, bookstore.User);
         }
@@ -321,7 +321,7 @@ namespace RecommendorsSystem
             return false;
         }
 
-        public void unrateBook(Book ratedBook)
+        public void unrateBook(BookGeneralData ratedBook)
         {
             bookstore.databaseFunctions.unrate(ratedBook, bookstore.User);
         }
