@@ -16,9 +16,11 @@ namespace RecommendorsSystem
         class GuiManager
         {
             DataGridView dgv;
-            public GuiManager(DataGridView dgv)
+            ComboBox cmb;
+            public GuiManager(DataGridView dgv, ComboBox cmb)
             {
                 this.dgv = dgv;
+                this.cmb = cmb;
             }
             
             public bool cellSelected()
@@ -34,6 +36,7 @@ namespace RecommendorsSystem
             public void fillWithSearchResults(LinkedList<BookWithAuthors> books)
             {
                 dgv.Rows.Clear();
+                dgv.Columns[1].Visible = true;
                 dgv.Columns[2].Visible = false;
                 foreach (Book book in books)
                 {
@@ -45,6 +48,7 @@ namespace RecommendorsSystem
             public void fillWithRecommendations(LinkedList<BookWithAuthorsAndScore> books )
             {
                 dgv.Rows.Clear();
+                dgv.Columns[1].Visible = false;
                 dgv.Columns[2].Visible = true;
                 /*
                 for(int i=0; i< books.Count; i++)
@@ -61,8 +65,8 @@ namespace RecommendorsSystem
                 foreach (BookWithAuthorsAndScore b in books)
                 {
                     int score = b.Score;
-                    BookInfoContainer bookTitle = new BookContainerTitle(b as Book);
-                    BookInfoContainer bookAuthor = new BookContainerAuthors(b as Book);
+                    BookInfoContainer bookTitle = new BookContainerTitle(b);
+                    BookInfoContainer bookAuthor = new BookContainerAuthors(b);
 
                     BookInfoContainer bookScore = new BookContainerScore(score, b);
                     dgv.Rows.Add(bookTitle, bookAuthor, bookScore);
@@ -88,8 +92,12 @@ namespace RecommendorsSystem
                 return null;
             }
 
-
-
+            internal void clearInterface()
+            {
+                dgv.Rows.Clear();
+                cmb.SelectedIndex = -1;
+                
+            }
         }
 
         GuiManager guiManager;
@@ -102,7 +110,7 @@ namespace RecommendorsSystem
             navSearchPanel = iNavSearchPanel;
             prepareComboboxSearchOptions();
             prepareRatesCombobox();
-            guiManager = new GuiManager(dataGridViewBooks);
+            guiManager = new GuiManager(dataGridViewBooks, comboBoxRate);
             
         }
 
@@ -125,6 +133,7 @@ namespace RecommendorsSystem
 
         private void buttonAccount_Click(object sender, EventArgs e)
         {
+            guiManager.clearInterface();
             navSearchPanel.goToAccount();
         }
 
@@ -254,6 +263,11 @@ namespace RecommendorsSystem
         {
             LinkedList<BookWithAuthorsAndScore> books = searchFunctions.askForRecommendations();
             guiManager.fillWithRecommendations(books);
+        }
+
+        private void dataGridViewBooks_SelectionChanged(object sender, EventArgs e)
+        {
+            dataGridViewBooks_CellContentClick(null, null);
         }
     }
 }

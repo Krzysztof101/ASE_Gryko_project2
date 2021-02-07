@@ -172,6 +172,7 @@
             this.dataGridViewBooks.Size = new System.Drawing.Size(460, 272);
             this.dataGridViewBooks.TabIndex = 5;
             this.dataGridViewBooks.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewBooks_CellContentClick);
+            this.dataGridViewBooks.SelectionChanged += new System.EventHandler(this.dataGridViewBooks_SelectionChanged);
             // 
             // Title
             // 

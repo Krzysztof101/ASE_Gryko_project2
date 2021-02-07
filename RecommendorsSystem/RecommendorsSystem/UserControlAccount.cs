@@ -17,9 +17,9 @@ namespace RecommendorsSystem
         IAccountFunctions accountInterfaceObject;
         INavAccount navAcc;
 
-        private class GUIMemoryManager
+        private class GUIManager
         {
-            public GUIMemoryManager(UserControlAccount own)
+            public GUIManager(UserControlAccount own)
             {
                 owner = own;
                 memory = new typeOfLastList();
@@ -74,8 +74,14 @@ namespace RecommendorsSystem
             {
                 return owner.dataGridViewBooks.SelectedCells.Count > 0;
             }
+            public void clearInterface()
+            {
+                owner.dataGridViewBooks.Rows.Clear();
+                owner.comboBox1.SelectedIndex = -1;
+                setBought();
+            }
         }
-        private GUIMemoryManager memoryManager;
+        private GUIManager guiManager;
 
         
 
@@ -84,7 +90,7 @@ namespace RecommendorsSystem
             InitializeComponent();
             accountInterfaceObject = iafcs;
             navAcc = inavacc;
-            memoryManager = new GUIMemoryManager(this);
+            guiManager = new GUIManager(this);
             buttonBuy.Enabled = false;
             buttonRemoveFromToBuy.Enabled = false;
             //accountInterfaceObject.showRated(); -- nie wiem czemu to tu było
@@ -92,9 +98,11 @@ namespace RecommendorsSystem
 
         private void buttonLogout_Click(object sender, EventArgs e)
         {
+            guiManager.clearInterface();
             accountInterfaceObject.logout();
             navAcc.goToLogin();
         }
+        
 
         private void buttonLikedCategs_Click(object sender, EventArgs e)
         {
@@ -121,7 +129,7 @@ namespace RecommendorsSystem
 
         private void buttonToBuyBooks_Click(object sender, EventArgs e)
         {
-            memoryManager.setTobuy();
+            guiManager.setTobuy();
             getToBuyBooks();
         }
         void getToBuyBooks()
@@ -139,7 +147,7 @@ namespace RecommendorsSystem
 
         private void buttonRated_Click(object sender, EventArgs e)
         {
-            memoryManager.setRated();
+            guiManager.setRated();
             getRatedBooks();
         }
         private void getRatedBooks()
@@ -180,7 +188,7 @@ namespace RecommendorsSystem
                     accountInterfaceObject.setBookRate(ratedBook, comboBox1.SelectedIndex);
                 }
             }
-            memoryManager.reloadLastOperation();
+            guiManager.reloadLastOperation();
         }
 
 
@@ -193,13 +201,13 @@ namespace RecommendorsSystem
                 int currentBookRate = accountInterfaceObject.getBookRate(currentBook);
                 prepareComboBox();
                 comboBox1.SelectedIndex = currentBookRate;
-                comboBox1.Refresh();
+                //comboBox1.Refresh();
             }
         }
 
         private void buttonBoughtBooks_Click(object sender, EventArgs e)
         {
-            memoryManager.setBought();
+            guiManager.setBought();
             getBoughtBooks();
         }
         void getBoughtBooks()
@@ -217,17 +225,22 @@ namespace RecommendorsSystem
 
         private void dataGridViewBooks_SelectionChanged(object sender, EventArgs e)
         {
-            
+            dataGridViewBooks_CellContentClick(null, null);
             
         }
         private BookGeneralData getSelectedBook()
         {
-            if ( memoryManager.DGVhasSelectedCell())
+            if ( guiManager.DGVhasSelectedCell())
             {
                 try
                 {
-                    BookGeneralData toReturn = (dataGridViewBooks.CurrentCell.Value as BookInfoContainer).book;
-                    return toReturn;
+                    var ctr = dataGridViewBooks.CurrentCell.Value;
+                    if(ctr==null)
+                    {
+                        return null;
+                        
+                    }
+                    return (dataGridViewBooks.CurrentCell.Value as BookInfoContainer).book;
                 }
                 catch
                 {
@@ -250,26 +263,26 @@ namespace RecommendorsSystem
 
         private void buttonRemoveFromToBuy_Click(object sender, EventArgs e)
         {
-            if(memoryManager.isShowingToBuyBooks() & memoryManager.DGVhasSelectedCell())
+            if(guiManager.isShowingToBuyBooks() & guiManager.DGVhasSelectedCell())
             {
                 BookGeneralData toRemove = getSelectedBook();
                 if (toRemove != null)
                 {
                     accountInterfaceObject.removeBookFromToBuy(toRemove);
-                    memoryManager.reloadLastOperation();
+                    guiManager.reloadLastOperation();
                 }
             }
         }
 
         private void buttonBuy_Click(object sender, EventArgs e)
         {
-            if (memoryManager.DGVhasSelectedCell())
+            if (guiManager.DGVhasSelectedCell())
             {
                 BookGeneralData toBuy = getSelectedBook();
                 if (toBuy != null)
                 {
                     accountInterfaceObject.buyBook(toBuy);
-                    memoryManager.reloadLastOperation();
+                    guiManager.reloadLastOperation();
 
                 }
 

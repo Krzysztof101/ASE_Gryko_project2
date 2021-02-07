@@ -49,7 +49,7 @@ namespace RecommendorsSystem
     {
         public BookContainerAuthors( BookWithAuthors b) : base(b)
         { 
-            LinkedList<Author> authors = (base.book as BookWithAuthors).Authors;
+            LinkedList<Author> authors = b.Authors;
             string authorsConcated = "";
             int i = 0;
             foreach(Author a in authors)

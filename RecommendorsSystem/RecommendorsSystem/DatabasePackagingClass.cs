@@ -226,12 +226,18 @@ namespace DatabasePackage
 
         public void saveBookInToBuy(BookGeneralData book, CurrentUser user)
         {
-            string cmdText = "Insert into UserBooksToBuy (ID_user, ID_book) values (@id_user, @id_book)";
-            SqlCommand cmd = new SqlCommand(cmdText, cnn);
-            cmd.Parameters.AddWithValue("@id_user", user.id);
-            cmd.Parameters.AddWithValue("@id_book", book.id);
-            cmd.ExecuteNonQuery();
+            try
+            {
+                string cmdText = "Insert into UserBooksToBuy (ID_user, ID_book) values (@id_user, @id_book)";
+                SqlCommand cmd = new SqlCommand(cmdText, cnn);
+                cmd.Parameters.AddWithValue("@id_user", user.id);
+                cmd.Parameters.AddWithValue("@id_book", book.id);
+                cmd.ExecuteNonQuery();
+            }
+            catch(Exception e)
+            {
 
+            }
         }
 
         public void setRate(BookGeneralData book, CurrentUser user, int rate )
@@ -461,7 +467,7 @@ namespace DatabasePackage
             foreach (BookGeneralData book in books)
             {
                 int bookID = book.id;
-                string commandText2 = "select AuthorName, AuthorLastName, Authors.id_author from Authors join AuthorsList on Authors.id_author = AuthorsList.id_author where AuthorsList.id_book=@book_id ";
+                string commandText2 = "select AuthorName, AuthorLastName, AuthorsList.id_author from Authors join AuthorsList on Authors.id_author = AuthorsList.id_author where AuthorsList.id_book=@book_id ";
                 SqlCommand command2 = new SqlCommand(commandText2, cnn);
                 command2.Parameters.AddWithValue("@book_id", bookID);
                 command2.CommandType = CommandType.Text;

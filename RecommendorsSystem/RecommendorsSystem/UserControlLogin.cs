@@ -26,7 +26,13 @@ namespace RecommendorsSystem
 
         private void buttonRegister_Click(object sender, EventArgs e)
         {
+            clearTextBoxes();
             loginNavigation.goToRegister();
+        }
+        private void clearTextBoxes()
+        {
+            textBoxUser.Text = "";
+            textBoxPassword.Text = "";
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)

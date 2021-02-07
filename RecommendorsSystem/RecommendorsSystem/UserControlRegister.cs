@@ -28,6 +28,13 @@ namespace RecommendorsSystem
         {
             iNavRegister.goToLogin();
         }
+        private void clearTextBoxes()
+        {
+            textBoxNick.Text = "";
+            textBoxUser.Text = "";
+            textBoxPassword1.Text = "";
+            textBoxPassword2.Text = "";
+        }
 
         private void buttonRegister_Click(object sender, EventArgs e)
         {
