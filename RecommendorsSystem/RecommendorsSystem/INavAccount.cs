@@ -10,6 +10,7 @@ namespace NavigationInterfaces
     {
         void goToLogin();
         void goToSearch();
+        void logOut();
         void goToShowCategories();
     }
 }

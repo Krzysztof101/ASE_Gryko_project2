@@ -20,7 +20,11 @@ namespace RecommendorsSystem
         UserControlSearch ucSea;
         UserControlShowCategs ucShCategs;
         UserControlEditCategs ucEditCategs;
-      
+        IEditCategoriesFunctions funEditCategs;
+        INavEditCategories navEditCategs;
+        IShowCategoriesFunctions showCategs;
+        INavShowCategories navShowCategs;
+
         public Form1()
         {
             InitializeComponent();
@@ -48,6 +52,10 @@ namespace RecommendorsSystem
             ucShCategs = new UserControlShowCategs(b.BookstoreFunctions,b.BookstoreNavigation);
             ucEditCategs = new UserControlEditCategs(b.BookstoreFunctions, b.BookstoreNavigation);
             ucSea = new UserControlSearch(b.BookstoreFunctions, b.BookstoreNavigation);
+            funEditCategs = b.BookstoreFunctions;
+            navEditCategs = b.BookstoreNavigation;
+            showCategs = b.BookstoreFunctions;
+            navShowCategs = b.BookstoreNavigation;
             this.Controls.Clear();
             this.Controls.Add(uclog);
             this.Refresh();
@@ -60,6 +68,7 @@ namespace RecommendorsSystem
 
         public void goToEditCategories()
         {
+            ucEditCategs = new UserControlEditCategs(funEditCategs, navEditCategs);
             switchControl(ucEditCategs);
         }
 
@@ -80,6 +89,7 @@ namespace RecommendorsSystem
 
         public void goToShowCategories()
         {
+            ucShCategs = new UserControlShowCategs(showCategs, navShowCategs);
             switchControl(ucShCategs);
         }
         private void switchControl(Control ccc)
@@ -87,6 +97,12 @@ namespace RecommendorsSystem
             this.Controls.Clear();
             this.Controls.Add(ccc);
             this.Refresh();
+        }
+
+        public void clearInterfaces()
+        {
+            ucEditCategs.clearInterface();
+            ucShCategs.clearInterface();
         }
     }
 }

@@ -12,12 +12,18 @@ namespace RecommendorsSystem
         public string login { get; private set; }
         public string password { get; private set; }
         public string nick { get; private set; }
-        public void loginOrRegister(int id, string login, string password, string nick)
+        public LinkedList<String> likedCategories{ get; private set; }
+        public void loginOrRegister(int id, string login, string password, string nick, LinkedList<string> likedCategs)
         {
             this.id = id;
             this.password = password;
             this.login = login;
             this.nick = nick;
+            likedCategories.Clear();
+            foreach(string s in likedCategs)
+            {
+                likedCategories.AddLast(s);
+            }
         }
         public void logout()
         {
@@ -25,6 +31,7 @@ namespace RecommendorsSystem
             login = "";
             password = "";
             nick = "";
+            likedCategories.Clear();
         }
         public CurrentUser()
         {
@@ -32,6 +39,7 @@ namespace RecommendorsSystem
             login = "";
             password = "";
             nick = "";
+            likedCategories = new LinkedList<string>();
         }
     }
 }

@@ -13,6 +13,10 @@ namespace RecommendorsSystem
         public ScoreModuleInfo ModuleInfo{ get; set; }
         public abstract int calculateScore(IRecommendationsGetters dbPackingClass, BookGeneralData book, CurrentUser user);
         public abstract string getDescriptor();
+        public void makeConsoleLog(int score)
+        {
+            Console.WriteLine("Module: " + ModuleInfo.Name + " - score: " + score.ToString());
+        }
     }
 
     
@@ -25,6 +29,7 @@ namespace RecommendorsSystem
             if (!ModuleInfo.Active)
             {
                 int howManySimilarCategsBooksViewedIn05h = dbPackingClass.getNoOfSimilarBooksViewedWithinHalfAnHour(book, user);
+                makeConsoleLog(howManySimilarCategsBooksViewedIn05h);
                 return ModuleInfo.MainMultiplicator * howManySimilarCategsBooksViewedIn05h;
             }
             return 0;
@@ -51,6 +56,7 @@ namespace RecommendorsSystem
                         categsCount++;
                     }
                 }
+                makeConsoleLog(categsCount * ModuleInfo.MainMultiplicator);
             return categsCount * ModuleInfo.MainMultiplicator;
             }
             return 0;
@@ -81,6 +87,7 @@ namespace RecommendorsSystem
                 }
                 totalSimilarCategsCount += categsCount;
             }
+            
             return totalSimilarCategsCount;
         }
 
@@ -127,7 +134,7 @@ namespace RecommendorsSystem
                 
                 int boughtBooksWithTheSameAuthor = FunctionsUtils.countAllSameAuthors(book, boughtBooks, dbPackingClass);
 
-
+                makeConsoleLog(totalSimilarCategsCount * ModuleInfo.getMultiplicatorAt("SameCategory") + boughtBooksWithTheSameAuthor * ModuleInfo.getMultiplicatorAt("SameAuthor"));
                 return ModuleInfo.MainMultiplicator* ( totalSimilarCategsCount * ModuleInfo.getMultiplicatorAt("SameCategory") + boughtBooksWithTheSameAuthor * ModuleInfo.getMultiplicatorAt("SameAuthor") );
             }
             return 0;
@@ -182,6 +189,7 @@ namespace RecommendorsSystem
 
                 int booksWithTheSameAuthors = FunctionsUtils.countAllSameAuthors(book, booksToBuy, dbPackingClass);
 
+                makeConsoleLog(ModuleInfo.MainMultiplicator * (booksWithTheSameCategs * ModuleInfo.getMultiplicatorAt("SameCategory") + booksWithTheSameAuthors * ModuleInfo.getMultiplicatorAt("SameAuthor")));
                 return ModuleInfo.MainMultiplicator * (booksWithTheSameCategs * ModuleInfo.getMultiplicatorAt("SameCategory") + booksWithTheSameAuthors * ModuleInfo.getMultiplicatorAt("SameAuthor"));
 
             }
@@ -245,28 +253,28 @@ namespace RecommendorsSystem
         {
             if (ModuleInfo.Active)
             {
-                LinkedList<UserRatesInfoSet> userBooksRates = dbPackingClass.getAllRowsInRates(); //sorted by userID, bookID
+                LinkedList<UserRatesInfoSet> userBooksRates = dbPackingClass.getAllRowsInRates(book); //sorted by userID, bookID
                 int sum = 0;
                 int count = 0;
                 foreach(UserRatesInfoSet u in userBooksRates)
                 {
-                    if(u.IdBook==book.id)
-                    {
-                        sum += u.Rate;
-                        count++;
-                    }
+                    sum += u.Rate;
+                    count++;
+                    
 
                 }
                 int avg = 0;
                 int retVal = avg;
                 if (count > 0)
                 {
-                    avg = (int)(((double)sum) / count);
+                    avg = (int)Math.Round(( (double)sum) / count);
+                    
                     int offset = -4;
                     avg -= offset;
-                    double numberOfBoughtModifier = count / ModuleInfo.getMultiplicatorAt("devider");
+                    double numberOfBoughtModifier = ((double)count) / ModuleInfo.getMultiplicatorAt("devider");
                     retVal = (int)(avg * numberOfBoughtModifier);
                 }
+                makeConsoleLog(retVal);
                 return retVal;
 
 
@@ -279,6 +287,7 @@ namespace RecommendorsSystem
                 double lowerThisUser = calculateRootOfSumOfSquared(matrix, currentUserIndex, currentBookIndex, thisUserAvg);
                 */
             }
+            makeConsoleLog(0);
             return 0;
         }
         /*
@@ -466,6 +475,7 @@ namespace RecommendorsSystem
                         bonus++;
                     }
                 }
+                makeConsoleLog(ModuleInfo.MainMultiplicator * bonus);
                 return ModuleInfo.MainMultiplicator * bonus;
             }
             return 0;
@@ -507,6 +517,7 @@ namespace RecommendorsSystem
                     }
 
                 }
+                makeConsoleLog(ModuleInfo.MainMultiplicator * (recentlySearched * ModuleInfo.getMultiplicatorAt("recentlySearched") + recentlySearchedCategs * ModuleInfo.getMultiplicatorAt("categories")));
                 return ModuleInfo.MainMultiplicator * (recentlySearched * ModuleInfo.getMultiplicatorAt("recentlySearched") + recentlySearchedCategs * ModuleInfo.getMultiplicatorAt("categories"));
                 
 
@@ -533,6 +544,7 @@ namespace RecommendorsSystem
                 {
                     sum += b.multiplicator;
                 }
+                makeConsoleLog(sum * ModuleInfo.MainMultiplicator);
                 return sum * ModuleInfo.MainMultiplicator;
             }
             return 0;
@@ -549,6 +561,7 @@ namespace RecommendorsSystem
         {
             if(ModuleInfo.Active)
             {
+                makeConsoleLog(ModuleInfo.MainMultiplicator * dbPackingClass.getNewBooksBonus(book));
                 return ModuleInfo.MainMultiplicator * dbPackingClass.getNewBooksBonus(book);
             }
             return 0;

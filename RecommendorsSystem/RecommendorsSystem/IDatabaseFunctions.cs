@@ -33,7 +33,7 @@ namespace RecommendorsSystem
         LinkedList<Author> getBookAuthors(BookGeneralData book);
         LinkedList<Bonus> getBonusFromAdmin(BookGeneralData book);
         int getNewBooksBonus(BookGeneralData book);
-        LinkedList<UserRatesInfoSet> getAllRowsInRates();
+        LinkedList<UserRatesInfoSet> getAllRowsInRates(BookGeneralData book);
         LinkedList<BookGeneralData> getBooksWithGeneralDataWithin05hour(CurrentUser user);
         LinkedList<Book> getBooksRecommendedWithin05h(CurrentUser user);
     }

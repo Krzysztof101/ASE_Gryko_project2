@@ -79,6 +79,12 @@ namespace RecommendorsSystem
             
         }
 
+        internal void clearInterface()
+        {
+            listBoxLikedCategs.Items.Clear();
+            listBoxOtherCategs.Items.Clear();
+        }
+
         private void removeFromLiked()
         {
             string category = listBoxLikedCategs.SelectedItem.ToString();

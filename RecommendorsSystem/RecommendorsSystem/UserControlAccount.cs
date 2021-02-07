@@ -100,6 +100,7 @@ namespace RecommendorsSystem
         {
             guiManager.clearInterface();
             accountInterfaceObject.logout();
+            navAcc.logOut();
             navAcc.goToLogin();
         }
         

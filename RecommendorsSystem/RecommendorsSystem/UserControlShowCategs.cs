@@ -42,5 +42,10 @@ namespace RecommendorsSystem
             }
             //listBoxLikedCategs.Refresh();
         }
+
+        internal void clearInterface()
+        {
+            listBoxLikedCategs.Items.Clear();
+        }
     }
 }

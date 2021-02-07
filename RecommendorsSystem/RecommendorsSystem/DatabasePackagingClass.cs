@@ -336,7 +336,7 @@ namespace DatabasePackage
             int id = getUserID(login);
             if(id!=0)
             {
-                user.loginOrRegister(id, login, password, nick);
+                user.loginOrRegister(id, login, password, nick, new LinkedList<string>());
             }
 
         }
@@ -348,7 +348,10 @@ namespace DatabasePackage
             oCmd.Parameters.AddWithValue("@usrLogin", login);
             oCmd.Parameters.AddWithValue("@usrPswd", password);
             bool result = false;
-
+            string usrLog = "";
+            string usrPswd = "";
+            string usrNick = "";
+            int id = 0;
             using (SqlDataReader oReader = oCmd.ExecuteReader())
             {
                 makeConsoleLog("after query1");
@@ -361,12 +364,11 @@ namespace DatabasePackage
                     {
 
                         result = true;
-                        int id = oReader.GetInt32(0);
-                        string usrLog = oReader.GetString(1);
-                        string usrPswd = oReader.GetString(2);
-                        string usrNick = oReader.GetString(3);
-                        user.loginOrRegister(id, usrLog, usrPswd, usrNick);
-                        makeConsoleLog("Logged in");
+                        id = oReader.GetInt32(0);
+                        usrLog = oReader.GetString(1);
+                        usrPswd = oReader.GetString(2);
+                        usrNick = oReader.GetString(3);
+                        
                     }
                     else
                     {
@@ -376,6 +378,27 @@ namespace DatabasePackage
 
                 }
                
+            }
+            if(result)
+            {
+                string commandText2 = "select id_categName from userLikedCategories where id_user =" + id.ToString()+";";
+                SqlCommand command = new SqlCommand(commandText2, cnn);
+                LinkedList<string> likedCategs = new LinkedList<string>();
+                using(SqlDataReader oReader = command.ExecuteReader())
+                {
+                    while(oReader.Read())
+                    {
+                        string category = oReader.GetString(0);
+                        likedCategs.AddLast(category);
+                    }
+                }
+
+                user.loginOrRegister(id, usrLog, usrPswd, usrNick, likedCategs);
+                makeConsoleLog("Logged in");
+            }
+            else
+            {
+                result = false;
             }
             return result;
         }
@@ -750,7 +773,7 @@ namespace DatabasePackage
                 if (oReader.Read())
                 {
                     desc = oReader.GetString(0);
-                    active = oReader.GetString(1);
+                    active =  oReader.GetString(1).ToLower();
                     mainMultiplicator = oReader.GetInt32(2);
                     makeConsoleLog("desc: " + desc + ", active: " + active + ", main multi: " + mainMultiplicator.ToString());
                 }
@@ -897,9 +920,9 @@ namespace DatabasePackage
             return 0;
         }
 
-        public LinkedList<UserRatesInfoSet> getAllRowsInRates()
+        public LinkedList<UserRatesInfoSet> getAllRowsInRates(BookGeneralData book)
         {
-            string commandText = "select ID_user, ID_book, Rate from UsersBooksRates;";
+            string commandText = "select ID_user, ID_book, Rate from UsersBooksRates where ID_book=" + book.id.ToString() + ";";
             SqlCommand command2 = new SqlCommand(commandText, cnn);
             command2.CommandType = CommandType.Text;
             LinkedList<UserRatesInfoSet> rates = new LinkedList<UserRatesInfoSet>();

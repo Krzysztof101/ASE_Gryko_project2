@@ -45,5 +45,10 @@ namespace RecommendorsSystem
         {
             mainFormNavigation.goToShowCategories();
         }
+
+        public void logOut()
+        {
+            mainFormNavigation.clearInterfaces();
+        }
     }
 }
