@@ -155,6 +155,7 @@
             this.buttonBuy.TabIndex = 6;
             this.buttonBuy.Text = "buy";
             this.buttonBuy.UseVisualStyleBackColor = true;
+            this.buttonBuy.Click += new System.EventHandler(this.buttonBuy_Click);
             // 
             // dataGridViewBooks
             // 

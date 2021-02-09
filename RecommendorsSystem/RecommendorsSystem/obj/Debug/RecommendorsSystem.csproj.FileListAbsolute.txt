@@ -33,7 +33,7 @@ C:\Users\m\Desktop\Studia\semestr5\ASE_remote2\ASE_Gryko_project2\RecommendorsSy
 C:\Users\m\Desktop\Studia\semestr5\ASE_remote2\ASE_Gryko_project2\RecommendorsSystem\RecommendorsSystem\bin\Debug\RecommendorsSystem.exe
 C:\Users\m\Desktop\Studia\semestr5\ASE_remote2\ASE_Gryko_project2\RecommendorsSystem\RecommendorsSystem\bin\Debug\RecommendorsSystem.pdb
 C:\Users\m\Desktop\Studia\semestr5\ASE_remote2\ASE_Gryko_project2\RecommendorsSystem\RecommendorsSystem\obj\Debug\RecommendorsSystem.csprojAssemblyReference.cache
-C:\Users\m\Desktop\Studia\semestr5\ASE_remote2\ASE_Gryko_project2\RecommendorsSystem\RecommendorsSystem\obj\Debug\RecommendorsSystem.Form1.resources
+C:\Users\m\Desktop\Studia\semestr5\ASE_remote2\ASE_Gryko_project2\RecommendorsSystem\RecommendorsSystem\obj\Debug\RecommendorsSystem.FormBookstore.resources
 C:\Users\m\Desktop\Studia\semestr5\ASE_remote2\ASE_Gryko_project2\RecommendorsSystem\RecommendorsSystem\obj\Debug\RecommendorsSystem.Properties.Resources.resources
 C:\Users\m\Desktop\Studia\semestr5\ASE_remote2\ASE_Gryko_project2\RecommendorsSystem\RecommendorsSystem\obj\Debug\RecommendorsSystem.UserControlAccount.resources
 C:\Users\m\Desktop\Studia\semestr5\ASE_remote2\ASE_Gryko_project2\RecommendorsSystem\RecommendorsSystem\obj\Debug\RecommendorsSystem.UserControlEditCategs.resources

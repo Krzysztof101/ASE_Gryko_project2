@@ -12,7 +12,7 @@ using NavigationInterfaces;
 
 namespace RecommendorsSystem
 {
-    public partial class Form1 : Form, IMainFormNavigation
+    public partial class FormBookstore : Form, IMainFormNavigation
     {
         UserControlLogin uclog;
         UserControlRegister ucreg;
@@ -20,12 +20,16 @@ namespace RecommendorsSystem
         UserControlSearch ucSea;
         UserControlShowCategs ucShCategs;
         UserControlEditCategs ucEditCategs;
+        ILoginFunctions funLogin;
+        INavLogin navLogin;
         IEditCategoriesFunctions funEditCategs;
         INavEditCategories navEditCategs;
         IShowCategoriesFunctions showCategs;
         INavShowCategories navShowCategs;
+        IRegisterFunctions funRegister;
+        INavRegister navRegister;
 
-        public Form1()
+        public FormBookstore()
         {
             InitializeComponent();
             /*
@@ -56,6 +60,11 @@ namespace RecommendorsSystem
             navEditCategs = b.BookstoreNavigation;
             showCategs = b.BookstoreFunctions;
             navShowCategs = b.BookstoreNavigation;
+            funLogin = b.BookstoreFunctions;
+            navLogin = b.BookstoreNavigation;
+            funRegister = b.BookstoreFunctions;
+            navRegister = b.BookstoreNavigation;
+            
             this.Controls.Clear();
             this.Controls.Add(uclog);
             this.Refresh();
@@ -74,11 +83,13 @@ namespace RecommendorsSystem
 
         public void goToLogin()
         {
+            uclog = new UserControlLogin(funLogin, navLogin);
             switchControl(uclog);
         }
 
         public void goToRegister()
         {
+            ucreg = new UserControlRegister(funRegister, navRegister);
             switchControl(ucreg);
         }
 

@@ -7,7 +7,7 @@ namespace RecommendorsSystem
 {
     public interface IAccountFunctions
     {
-        void showRated();
+        //void showRated();
         LinkedList<Book> getBoughtBooks();
         LinkedList<Book> getToBuyBooks();
         void removeBookFromToBuy(BookGeneralData bookToRemoveFromToBuy);

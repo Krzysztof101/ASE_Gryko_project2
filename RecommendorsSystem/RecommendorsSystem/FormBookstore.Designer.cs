@@ -1,6 +1,6 @@
 ﻿namespace RecommendorsSystem
 {
-    partial class Form1
+    partial class FormBookstore
     {
         /// <summary>
         /// Wymagana zmienna projektanta.

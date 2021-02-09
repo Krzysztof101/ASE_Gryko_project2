@@ -24,7 +24,7 @@ namespace DatabasePackage
 
         private string connectionString;
         private SqlConnection cnn;
-        private int userID;
+        //private int userID;
         public void initializeAndConnect()
         {
             string computerName = Environment.MachineName;
@@ -710,7 +710,7 @@ namespace DatabasePackage
 
         }
 
-
+        /*
         private string buildCondition(string[] authorsArray)
         {
             StringBuilder iNcondition = new StringBuilder();
@@ -722,7 +722,7 @@ namespace DatabasePackage
             }
             return iNcondition.ToString();
         }
-
+        */
         public void saveInfoAboutRecommendation(Book book, CurrentUser user)
         {
             throw new NotImplementedException();

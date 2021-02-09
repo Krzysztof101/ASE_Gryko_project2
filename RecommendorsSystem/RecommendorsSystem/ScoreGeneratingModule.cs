@@ -204,6 +204,7 @@ namespace RecommendorsSystem
 
     public class RatesModule : ScoreGeneratingModule
     {
+        /*
         class SimilarityMatrix 
         {
             int[,] matrix;
@@ -225,6 +226,7 @@ namespace RecommendorsSystem
             }
             public int getScore(int user, int book) { return matrix[user, book]; }
         }
+        */
 
         /*
           double upper = 0.0;
@@ -298,7 +300,7 @@ namespace RecommendorsSystem
 
         }
         */
-
+        /*
         private double calculateRootOfSumOfSquared(SimilarityMatrix matrix ,int userIndex, int excludedBookIndex, double userAvg)
         {
             double sum = 0.0;
@@ -311,7 +313,8 @@ namespace RecommendorsSystem
             }
             return Math.Sqrt(sum);
         }
-
+        */
+        /*
         private double calculateAvgForUser(SimilarityMatrix matrix, int userIndex, int currentBookId)
         {
             int sum = 0;
@@ -331,7 +334,7 @@ namespace RecommendorsSystem
             }
             return avg;
         }
-
+        */
         /*
          * 
          * 
@@ -363,7 +366,7 @@ namespace RecommendorsSystem
 
                 }
          */
-
+        /*
         private SimilarityMatrix prepareMatrix(LinkedList<UserRatesInfoSet> userBooksRates,int bookID,out int currentUserIndex, out int currentBookIndex, CurrentUser user)
         {
             int usersCounter = countUsers(userBooksRates);
@@ -434,7 +437,8 @@ namespace RecommendorsSystem
             }
             return hashArray;
         }
-
+        */
+        /*
         private int countBooks(LinkedList<UserRatesInfoSet> userBooksRates)
         {
             throw new NotImplementedException();
@@ -452,7 +456,7 @@ namespace RecommendorsSystem
             }
             return booksIds.Count;
         }
-
+        */
         public override string getDescriptor()
         {
             return "Rates";

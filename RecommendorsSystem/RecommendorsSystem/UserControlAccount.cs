@@ -150,6 +150,7 @@ namespace RecommendorsSystem
         {
             guiManager.setRated();
             getRatedBooks();
+
         }
         private void getRatedBooks()
         {
@@ -211,7 +212,7 @@ namespace RecommendorsSystem
             guiManager.setBought();
             getBoughtBooks();
         }
-        void getBoughtBooks()
+        private void getBoughtBooks()
         {
             dataGridViewBooks.Rows.Clear();
             LinkedList<Book> boughtBooks = accountInterfaceObject.getBoughtBooks();

@@ -20,7 +20,7 @@ namespace RecommendorsSystem
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Form1 f1 = new Form1();
+            FormBookstore f1 = new FormBookstore();
             DatabasePackagingClass db = DatabasePackagingClass.instance;
             db.initializeAndConnect();
             Bookstore b = Bookstore.initialize(f1,db, db);

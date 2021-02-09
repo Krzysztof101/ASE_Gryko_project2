@@ -131,12 +131,12 @@ namespace RecommendorsSystem
         {
             throw new NotImplementedException();
         }
-        */
+        
         public void logoutAndGoToLogin()
         {
             throw new NotImplementedException();
         }
-
+        */
         public bool passwordCorrect(string password)
         {
             throw new NotImplementedException();
@@ -209,10 +209,10 @@ namespace RecommendorsSystem
             return stringBuilder.ToString();
         }
 
-
-        private String[] separateWords(string words)
-        {
-            return words.Split(' ');
+        
+        //private String[] separateWords(string words)
+        //{
+          //  return words.Split(' ');
             /*
             words += " ";
             LinkedList<string> wordsList = new LinkedList<string>();
@@ -240,7 +240,8 @@ namespace RecommendorsSystem
             }
             return wordsList;
             */
-        }
+    //    }
+    
 
         public LinkedList<BookWithAuthors> searchByTitle(string title)
         {
@@ -251,12 +252,12 @@ namespace RecommendorsSystem
         {
             bookstore.databaseFunctions.setRate(ratedBook,bookstore.User, rate);
         }
-
+        /*
         public void showRated()
         {
             throw new NotImplementedException();
         }
-
+        */
         
 
         public void viewBook(BookGeneralData bookToView)
@@ -309,7 +310,7 @@ namespace RecommendorsSystem
             }
             return true;
         }
-        bool containsOneOfChars(string pswd, string chars)
+        private bool containsOneOfChars(string pswd, string chars)
         {
             foreach (char c in chars)
             {
@@ -330,13 +331,13 @@ namespace RecommendorsSystem
         {
             bookstore.User.logout();
         }
-
+        /*
         public void rateBook(double rate, Book bookToRate)
         {
             //TODO remove that function
             throw new NotImplementedException();
         }
-
+        */
         
     }
 }

@@ -57,7 +57,7 @@ namespace BookstorePackage
         {
             return _instance;
         }
-        public CurrentUser User { get; set; }
+        
 
 
 
@@ -124,7 +124,7 @@ namespace BookstorePackage
 
 
 
-        string function() { return "Bookstore function"; }
+        public CurrentUser User { get; set; }
 
         public BookstoreNavFunctions BookstoreNavigation { get; private set; }
         public BookstoreUIFunctions BookstoreFunctions { get; private set; }

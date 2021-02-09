@@ -269,5 +269,14 @@ namespace RecommendorsSystem
         {
             dataGridViewBooks_CellContentClick(null, null);
         }
+
+        private void buttonBuy_Click(object sender, EventArgs e)
+        {
+            BookWithAuthors currentBook = guiManager.getSelectedBook();
+            if (currentBook != null)
+            {
+                searchFunctions.buyBook(currentBook);
+            }
+        }
     }
 }
