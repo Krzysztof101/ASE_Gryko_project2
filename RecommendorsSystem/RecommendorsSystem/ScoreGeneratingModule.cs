@@ -9,7 +9,7 @@ namespace RecommendorsSystem
     public abstract class ScoreGeneratingModule
     {
         //protected CurrentUser user;
-        public ScoreGeneratingModule(/*CurrentUser user*/) { /*this.user = user;*/ }
+        public ScoreGeneratingModule() {  }
         public ScoreModuleInfo ModuleInfo{ get; set; }
         public abstract int calculateScore(IRecommendationsGetters dbPackingClass, BookGeneralData book, CurrentUser user);
         public abstract string getDescriptor();
@@ -68,7 +68,7 @@ namespace RecommendorsSystem
        
     }
 
-    class FunctionsUtils
+    internal class FunctionsUtils
     {
         public static int countSameCategoriesBooks(BookGeneralData book, LinkedList<Book> boughtBooks, IRecommendationsGetters dbPackingClass)
         {

@@ -15,7 +15,7 @@ namespace RecommendorsSystem
         LinkedList<Book> getRatedBooks();
         void setBookRate(BookGeneralData ratedBook, int rate);
         void unrateBook(BookGeneralData ratedBook);
-        bool passwordCorrect(string password);
+        //bool passwordCorrect(string password);
         //void logoutAndGoToLogin();
         void deleteAccount(string userPassword);
         void logout();

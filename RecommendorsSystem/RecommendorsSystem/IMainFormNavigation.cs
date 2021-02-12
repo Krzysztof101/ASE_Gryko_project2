@@ -8,12 +8,14 @@ namespace NavigationInterfaces
 {
     public interface IMainFormNavigation
     {
+        
         void goToLogin();
         void goToRegister();
         void goToAccount();
         void goToSearch();
         void goToShowCategories();
         void goToEditCategories();
+        
         void clearInterfaces();
     }
 }

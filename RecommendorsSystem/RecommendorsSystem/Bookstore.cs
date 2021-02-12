@@ -18,22 +18,28 @@ namespace BookstorePackage
             recommendationsFunctions = irecComp;
             databaseFunctions = idbfuns;
             User = new CurrentUser();
-            recommendationsGenerator = new RecommendationsGenerator(irecComp, listOfModules());
+            recommendationsGenerator = new RecommendationsGenerator(irecComp/*, listOfModules()*/);
         }
 
+        /*
         private LinkedList<ScoreGeneratingModule> listOfModules()
         {
             LinkedList<ScoreGeneratingModule> scoreModules = new LinkedList<ScoreGeneratingModule>();
-            scoreModules.AddLast(new SearchHistoryScoreModule(/*user*/));
-            scoreModules.AddLast(new ViewingHistoryModule(/*user*/));
-            scoreModules.AddLast(new LikedCategoriesModule(/*user*/));
-            scoreModules.AddLast(new RatesModule(/*user*/));
-            scoreModules.AddLast(new LatestRecommendationsModule(/*user*/));
-            scoreModules.AddLast(new AdminBonusesModule(/*user*/));
-            scoreModules.AddLast(new NewBooksModule(/*user*/));
-            scoreModules.AddLast(new BoughtBooksModule(/*user*/));
-            scoreModules.AddLast(new BooksToBuyModule(/*user*/));
+            scoreModules.AddLast(new SearchHistoryScoreModule());
+            scoreModules.AddLast(new ViewingHistoryModule());
+            scoreModules.AddLast(new LikedCategoriesModule());
+            scoreModules.AddLast(new RatesModule());
+            scoreModules.AddLast(new LatestRecommendationsModule());
+            scoreModules.AddLast(new AdminBonusesModule());
+            scoreModules.AddLast(new NewBooksModule());
+            scoreModules.AddLast(new BoughtBooksModule());
+            scoreModules.AddLast(new BooksToBuyModule());
             return scoreModules;
+        }
+    */
+        internal LinkedList<BookWithAuthorsAndScore> generateRecommendations()
+        {
+            return recommendationsGenerator.generateRecommendations(User);
         }
 
         //private static Lazy<Bookstore> instance = new Lazy<Bookstore>(() => new Bookstore());
@@ -64,6 +70,11 @@ namespace BookstorePackage
         internal bool checkIfUserDoesntExist(string login)
         {
             return !databaseFunctions.checkIfUserExists(login);
+        }
+
+        internal void deleteAccount(string login, string pswd)
+        {
+            databaseFunctions.deleteAccount(login, pswd);
         }
 
         internal bool checkIfNickDoesntExist(string nick)

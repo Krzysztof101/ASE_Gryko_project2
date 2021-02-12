@@ -4,6 +4,23 @@ namespace RecommendorsSystem
 {
     public class RecommendationsGenerator
     {
+        public static LinkedList<ScoreGeneratingModule> listOfModules()
+        {
+            LinkedList<ScoreGeneratingModule> scoreModules = new LinkedList<ScoreGeneratingModule>();
+            scoreModules.AddLast(new SearchHistoryScoreModule(/*user*/));
+            scoreModules.AddLast(new ViewingHistoryModule(/*user*/));
+            scoreModules.AddLast(new LikedCategoriesModule(/*user*/));
+            scoreModules.AddLast(new RatesModule(/*user*/));
+            scoreModules.AddLast(new LatestRecommendationsModule(/*user*/));
+            scoreModules.AddLast(new AdminBonusesModule(/*user*/));
+            scoreModules.AddLast(new NewBooksModule(/*user*/));
+            scoreModules.AddLast(new BoughtBooksModule(/*user*/));
+            scoreModules.AddLast(new BooksToBuyModule(/*user*/));
+            return scoreModules;
+        }
+        public RecommendationsGenerator(IRecommendationsComponent recFuns) :this(recFuns, listOfModules() )
+        {
+        }
 
         public RecommendationsGenerator(IRecommendationsComponent recFuns, LinkedList<ScoreGeneratingModule> modules)
         {

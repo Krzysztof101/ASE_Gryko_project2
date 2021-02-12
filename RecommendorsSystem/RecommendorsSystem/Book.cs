@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RecommendorsSystem
 {
-    public class Book :BookWithAuthors, BookWithScore, BookWithAuthorsAndScore
+    public class Book :BookWithAuthors, BookWithScore, BookWithAuthorsAndScore, BookGeneralData
     {
         public Book()
         {
@@ -29,12 +29,12 @@ namespace RecommendorsSystem
             price = otherBook.price;
             priceMinusDiscountInProcent = otherBook.priceMinusDiscountInProcent;
         }
-        protected LinkedList<Author> authors;
-        protected int score;
-        public int _id;
-        public string _title;
-        public decimal _price;
-        public int _priceMinusDiscountInProcent;
+        private LinkedList<Author> authors;
+        private int score;
+        private int _id;
+        private string _title;
+        private decimal _price;
+        private int _priceMinusDiscountInProcent;
 
         public int Score { get { return score; } set { score = value; } }
         public LinkedList<Author> Authors 

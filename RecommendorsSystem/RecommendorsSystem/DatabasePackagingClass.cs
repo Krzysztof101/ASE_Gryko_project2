@@ -39,6 +39,14 @@ namespace DatabasePackage
         public void Dispose()
         {
             cnn.Close();
+            if(cnn.State==ConnectionState.Closed)
+            {
+                makeConsoleLog("connection to db closed");
+            }
+            else
+            {
+                makeConsoleLog("connection still open despite attempt to close it");
+            }
         }
 
         public static void makeConsoleLog(string log)

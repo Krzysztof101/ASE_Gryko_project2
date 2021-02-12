@@ -25,7 +25,7 @@ namespace RecommendorsSystem
 
         public LinkedList<BookWithAuthorsAndScore> askForRecommendations()
         {
-            return bookstore.recommendationsGenerator.generateRecommendations(bookstore.User);
+            return bookstore.generateRecommendations();
         }
 
         public void buyBook(BookGeneralData bookToBuy)
@@ -75,7 +75,7 @@ namespace RecommendorsSystem
             string pswd = bookstore.User.password;
             string login = bookstore.User.login;
             bookstore.User.logout();
-            bookstore.databaseFunctions.deleteAccount(login,pswd);
+            bookstore.deleteAccount(login,pswd);
         }
         /*
         public void eraseBookRate(Book bookToUnrate)
@@ -136,12 +136,12 @@ namespace RecommendorsSystem
         {
             throw new NotImplementedException();
         }
-        */
+        
         public bool passwordCorrect(string password)
         {
             throw new NotImplementedException();
         }
-
+        */
         
 
 
@@ -153,6 +153,10 @@ namespace RecommendorsSystem
 
         public bool tryToLogin(string login, string password)
         {
+            if(login == "" || password == "")
+            {
+                return false;
+            }
             return bookstore.tryToLogin(login, password);
         }
 
