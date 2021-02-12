@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace RecommendorsSystem
 {
-    public interface IEditCategoriesFunctions
+    public interface IEditCategoriesFunctions :IShowCategoriesFunctions
     {
         LinkedList<string> getAllCategories();
-        LinkedList<string> getLikedCategories();
-        void addCategoryToLikedcategories(string newLikedCategory);
+        //latest fix //LinkedList<string> getLikedCategories();
+        void addCategoryToLikedCategories(string newLikedCategory);
         void removeCategoryFromLikedCategories(string categoryToRemove);
     }
 }

@@ -10,27 +10,28 @@ namespace RecommendorsSystem
     public class BookstoreUIFunctions : IAccountFunctions, IEditCategoriesFunctions, ILoginFunctions, 
         IRegisterFunctions, ISearchPanelFunctions, IShowCategoriesFunctions 
     {
-        private Bookstore bookstore;
+        //private Bookstore bookstore;
+        private IBookstoreBookstoreUIFunctions bookstoreInterfaceObject;
         private string registerMessage;
 
-        public BookstoreUIFunctions(Bookstore b)
+        public BookstoreUIFunctions(IBookstoreBookstoreUIFunctions b)
         {
-            bookstore = b;
+            bookstoreInterfaceObject = b;
             registerMessage = "";
         }
-        public void addCategoryToLikedcategories(string newLikedCategory)
+        public void addCategoryToLikedCategories(string newLikedCategory)
         {
-            bookstore.addCategoryToLikedCategories(newLikedCategory);
+            bookstoreInterfaceObject.addCategoryToLikedCategories(newLikedCategory);
         }
 
         public LinkedList<BookWithAuthorsAndScore> askForRecommendations()
         {
-            return bookstore.askForRecommendations();
+            return bookstoreInterfaceObject.askForRecommendations();
         }
 
         public void buyBook(BookGeneralData bookToBuy)
         {
-            bookstore.buyBook(bookToBuy);
+            bookstoreInterfaceObject.buyBook(bookToBuy);
         }
 
         public bool checkIfCredentialsValid(string login, string password1, string password2, string nick)
@@ -40,11 +41,11 @@ namespace RecommendorsSystem
             if(checkResult==allGood)
             {
                 bool nickNotTaken = true, loginNotTaken = true;
-                if(bookstore.checkIfUserExists(login) )
+                if(bookstoreInterfaceObject.checkIfUserExists(login) )
                 {
                     loginNotTaken = false;
                 }
-                if(bookstore.checkIfNickExists(nick) )
+                if(bookstoreInterfaceObject.checkIfNickExists(nick) )
                 {
                     nickNotTaken = false;
                 }
@@ -70,11 +71,10 @@ namespace RecommendorsSystem
             return false;
         }
 
-        public void deleteAccount(string userPassword)
+        public void deleteAccount()
         {
-            string pswd = bookstore.User.password;
-            string login = bookstore.User.login;
-            bookstore.deleteAccount(login,pswd);
+            
+            bookstoreInterfaceObject.deleteAccount();
         }
         /*
         public void eraseBookRate(Book bookToUnrate)
@@ -91,24 +91,24 @@ namespace RecommendorsSystem
 
         public int getBookRate(BookGeneralData currentBook)
         {
-            return bookstore.getBookRate(currentBook);
+            return bookstoreInterfaceObject.getBookRate(currentBook);
         }
 
 
 
         public LinkedList<string> getAllCategories()
         {
-            return bookstore.getAllCategories();
+            return bookstoreInterfaceObject.getAllCategories();
         }
 
         public LinkedList<Book> getBoughtBooks()
         {
-            return bookstore.getBoughtBooks();
+            return bookstoreInterfaceObject.getBoughtBooks();
         }
 
         public LinkedList<string> getLikedCategories()
         {
-            return bookstore.getLikedCategories();
+            return bookstoreInterfaceObject.getLikedCategories();
         }
 
         public string getMessage()
@@ -118,12 +118,12 @@ namespace RecommendorsSystem
 
         public LinkedList<Book> getRatedBooks()
         {
-            return bookstore.getRatedBooks();
+            return bookstoreInterfaceObject.getRatedBooks();
         }
 
         public LinkedList<Book> getToBuyBooks()
         {
-            return bookstore.getToBuyBooks();
+            return bookstoreInterfaceObject.getToBuyBooks();
         }
         /*
         public void goToAccount()
@@ -147,7 +147,7 @@ namespace RecommendorsSystem
 
         public void registerNewUser(string login, string password, string nick)
         {
-            bookstore.registerNewUser(login, password, nick);
+            bookstoreInterfaceObject.registerNewUser(login, password, nick);
         }
 
         public bool tryToLogin(string login, string password)
@@ -156,24 +156,24 @@ namespace RecommendorsSystem
             {
                 return false;
             }
-            return bookstore.tryToLogin(login, password);
+            return bookstoreInterfaceObject.tryToLogin(login, password);
         }
 
 
 
         public void removeBookFromToBuy(BookGeneralData bookToRemoveFromToBuy)
         {
-            bookstore.removeBookfromToBuy(bookToRemoveFromToBuy);
+            bookstoreInterfaceObject.removeBookFromToBuy(bookToRemoveFromToBuy);
         }
 
         public void removeCategoryFromLikedCategories(string categoryToRemove)
         {
-            bookstore.removeCategoryFromLikedCategories(categoryToRemove);
+            bookstoreInterfaceObject.removeCategoryFromLikedCategories(categoryToRemove);
         }
 
         public void saveBookInToBuy(BookGeneralData bookToBeBoughtInFuture)
         {
-            bookstore.saveBookInToBuy(bookToBeBoughtInFuture);
+            bookstoreInterfaceObject.saveBookInToBuy(bookToBeBoughtInFuture);
         }
 
         public LinkedList<BookWithAuthors> searchByAuthor(string searchPhrase)
@@ -191,7 +191,7 @@ namespace RecommendorsSystem
             }
             */
 
-            return bookstore.searchByAuthor(onlyLettersPhrase);
+            return bookstoreInterfaceObject.searchByAuthor(onlyLettersPhrase);
         }
         private string anyString() { return "%"; }
         private string getRidOfNoise(string searchPhrase)
@@ -248,12 +248,12 @@ namespace RecommendorsSystem
 
         public LinkedList<BookWithAuthors> searchByTitle(string title)
         {
-            return bookstore.searchByTitle(title);
+            return bookstoreInterfaceObject.searchByTitle(title);
         }
 
         public void setBookRate(BookGeneralData ratedBook, int rate)
         {
-            bookstore.setBookRate(ratedBook, rate);
+            bookstoreInterfaceObject.setBookRate(ratedBook, rate);
         }
         /*
         public void showRated()
@@ -265,7 +265,7 @@ namespace RecommendorsSystem
 
         public void viewBook(BookGeneralData bookToView)
         {
-            bookstore.viewBook(bookToView);
+            bookstoreInterfaceObject.viewBook(bookToView);
         }
 
         private string checkCredentials(string user, string pswd1, string pswd2, string nick)
@@ -327,12 +327,12 @@ namespace RecommendorsSystem
 
         public void unrateBook(BookGeneralData ratedBook)
         {
-            bookstore.unrateBook(ratedBook);
+            bookstoreInterfaceObject.unrateBook(ratedBook);
         }
 
         public void logout()
         {
-            bookstore.logout();
+            bookstoreInterfaceObject.logout();
         }
         /*
         public void rateBook(double rate, Book bookToRate)

@@ -95,8 +95,10 @@ namespace DatabasePackage
             throw new NotImplementedException();
         }
         */
-        public void deleteAccount(string login, string password)
+        public void deleteAccount(CurrentUser user)
         {
+            string login = user.login;
+            string password = user.password;
             try
             {
                 using (SqlCommand command = new SqlCommand("DELETE FROM Users WHERE UserLogin = '" + login + "' and UserPassword= '" + password+"'", cnn))

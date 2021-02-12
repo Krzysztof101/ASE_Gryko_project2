@@ -60,6 +60,8 @@
       <DependentUpon>FormBookstore.cs</DependentUpon>
     </Compile>
     <Compile Include="IAccountFunctions.cs" />
+    <Compile Include="IAccountSearchSharedFunctions.cs" />
+    <Compile Include="ICategoriesSharedFunctions.cs" />
     <Compile Include="IDatabaseFunctions.cs" />
     <Compile Include="IEditCategoriesFunctions.cs" />
     <Compile Include="IGetAllCategories.cs" />

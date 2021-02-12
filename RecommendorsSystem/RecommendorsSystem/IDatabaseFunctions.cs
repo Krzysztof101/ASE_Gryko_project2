@@ -56,7 +56,8 @@ namespace RecommendorsSystem
         bool checkIfUserExists(string login);
         bool checkIfNickExists(string nick);
         void registerNewUser(string login, string password, string nick, CurrentUser user);
-        void deleteAccount(string login, string password);
+        //void deleteAccount(string login, string password);
+        void deleteAccount(CurrentUser user);
     }
     public interface IsaveInfoAboutRecommendation
     {

@@ -72,7 +72,7 @@ namespace RecommendorsSystem
         private void addToLiked()
         {
             string category = listBoxOtherCategs.SelectedItem.ToString();
-            editCategoriesFunctions.addCategoryToLikedcategories(category);
+            editCategoriesFunctions.addCategoryToLikedCategories(category);
             
                 listBoxOtherCategs.Items.Remove(category);
                 listBoxLikedCategs.Items.Add(category);

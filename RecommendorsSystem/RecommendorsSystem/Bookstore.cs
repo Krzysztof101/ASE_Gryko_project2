@@ -9,34 +9,79 @@ using NavigationInterfaces;
 
 namespace BookstorePackage
 {
-    public interface IBookstoreBookstoreUIFunctions
+    public interface IBookstoreBookstoreUIFunctions :IAccountFunctions, IEditCategoriesFunctions, ILoginFunctions, ISearchPanelFunctions, IShowCategoriesFunctions
     {
-        void addCategoryToLikedCategories(string newLikedCategory);
-        LinkedList<BookWithAuthorsAndScore> askForRecommendations();
+        //IAccountFunctions
+        /*
+        LinkedList<Book> getBoughtBooks();
+        LinkedList<Book> getToBuyBooks();
+        void removeBookFromToBuy(BookGeneralData bookToRemoveFromToBuy);
         void buyBook(BookGeneralData bookToBuy);
+        LinkedList<Book> getRatedBooks();
+        void setBookRate(BookGeneralData ratedBook, int rate);
+        void unrateBook(BookGeneralData ratedBook);
+        void deleteAccount();
+        void logout();
+        int getBookRate(BookGeneralData currentBook);
+        */
+
+        //IEditCategs
+        /*
+        LinkedList<string> getAllCategories();
+        LinkedList<string> getLikedCategories();
+        void addCategoryToLikedCategories(string newLikedCategory);
+        void removeCategoryFromLikedCategories(string categoryToRemove);
+        */
+        //ILoginFunctions
+        //bool tryToLogin(string login, string password);
+
+        //IRegisterFunctions - nie korzystamy
+        //ISearchPanelFunctions - korzystamy
+        /*
+         LinkedList<BookWithAuthors> searchByAuthor(string authors);
+        LinkedList<BookWithAuthors> searchByTitle(string title);
+        void buyBook(BookGeneralData bookToBuy);
+        void setBookRate(BookGeneralData bookToRate, int rate);
+        int getBookRate(BookGeneralData book);
+        void unrateBook(BookGeneralData bookToUnrate);
+        void saveBookInToBuy(BookGeneralData bookToBeBoughtInFuture);
+        void viewBook(BookGeneralData bookToView);
+        LinkedList<BookWithAuthorsAndScore> askForRecommendations();
+        */
+
+
+        //void addCategoryToLikedCategories(string newLikedCategory);
+        //-- from parent interface --//LinkedList<BookWithAuthorsAndScore> askForRecommendations();
+        //void buyBook(BookGeneralData bookToBuy);
+        
+        //void deleteAccount();
+        //int getBookRate(BookGeneralData currentBook);
+        //LinkedList<string> getAllCategories();
+        //LinkedList<Book> getBoughtBooks();
+        //LinkedList<string> getLikedCategories();
+        //LinkedList<Book> getRatedBooks();
+        //LinkedList<Book> getToBuyBooks();
+        
+        //bool tryToLogin(string login,string password);
+        //void removeBookFromToBuy(BookGeneralData bookToRemoveFromToBuy);
+        //void removeCategoryFromLikedCategories(string categoryToRemove);
+        //-- from parent interface --// void saveBookInToBuy(BookGeneralData bookToBeBoughtInFuture);
+        
+        //-- from parent interface --// LinkedList<BookWithAuthors> searchByTitle(string title);
+        //void setBookRate(BookGeneralData ratedBook, int rate);
+        //-- from parent interface --// void viewBook(BookGeneralData bookToView);
+        //void unrateBook(BookGeneralData ratedBook);
+        //void logout();
+        //-- from parent interface --// LinkedList<BookWithAuthors> searchByAuthor(string onlyLettersPhrase);
+
         bool checkIfUserExists(string login);
         bool checkIfNickExists(string nick);
-        void deleteAccount(string login, string pswd);
-        int getBookRate(BookGeneralData currentBook);
-        LinkedList<string> getAllCategories();
-        LinkedList<Book> getBoughtBooks();
-        LinkedList<string> getLikedCategories();
-        LinkedList<Book> getRatedBooks();
-        LinkedList<Book> getToBuyBooks();
+        //-- from parent interface --//LinkedList<BookWithAuthors> searchByAuthor(string onlyLettersPhrase);
         void registerNewUser(string login, string password, string nick);
-        bool tryToLogin(string login,string password);
-        void removeBookfromToBuy(BookGeneralData bookToRemoveFromToBuy);
-        void removeCategoryFromLikedCategories(string categoryToRemove);
-        void saveBookInToBuy(BookGeneralData bookToBeBoughtInFuture);
-        LinkedList<BookWithAuthors> seaarchByAuthor(string onlyLettersPhrase);
-        LinkedList<BookWithAuthors> searchByTitle(string title);
-        void setBookRate(BookGeneralData ratedBook, int rate);
-        void viewBook(BookGeneralData bookToView);
-        void unrateBook(BookGeneralData ratedBook);
-        void logout();
+
     }
 
-    public class Bookstore
+    public class Bookstore :IBookstoreBookstoreUIFunctions
     {
         private Bookstore(IMainFormNavigation imfn, IDatabaseFunctions idbfuns, IRecommendationsComponent irecComp)
         {
@@ -48,12 +93,12 @@ namespace BookstorePackage
             recommendationsGenerator = new RecommendationsGenerator(irecComp/*, listOfModules()*/);
         }
 
-        internal void addCategoryToLikedCategories(string newLikedCategory)
+        public void addCategoryToLikedCategories(string newLikedCategory)
         {
             databaseFunctions.addCategoryToLiked(newLikedCategory, User);
         }
 
-        internal void buyBook(BookGeneralData bookToBuy)
+        public void buyBook(BookGeneralData bookToBuy)
         {
             databaseFunctions.buyBook(bookToBuy, User);
         }
@@ -74,7 +119,7 @@ namespace BookstorePackage
             return scoreModules;
         }
     */
-        internal LinkedList<BookWithAuthorsAndScore> askForRecommendations()
+        public LinkedList<BookWithAuthorsAndScore> askForRecommendations()
         {
             return recommendationsGenerator.generateRecommendations(User);
         }
@@ -99,32 +144,32 @@ namespace BookstorePackage
             return _instance;
         }
 
-        internal LinkedList<string> getLikedCategories()
+        public LinkedList<string> getLikedCategories()
         {
             return databaseFunctions.getLikedCategories(User);
         }
 
-        internal LinkedList<Book> getRatedBooks()
+        public LinkedList<Book> getRatedBooks()
         {
             return databaseFunctions.getRatedBooks(User);
         }
 
-        internal LinkedList<Book> getToBuyBooks()
+        public LinkedList<Book> getToBuyBooks()
         {
             return databaseFunctions.getToBuyBooks(User);
         }
 
-        internal LinkedList<Book> getBoughtBooks()
+        public LinkedList<Book> getBoughtBooks()
         {
             return databaseFunctions.getBoughtBooks(User);
         }
 
-        internal LinkedList<string> getAllCategories()
+        public LinkedList<string> getAllCategories()
         {
             return databaseFunctions.getAllCategories();
         }
 
-        internal int getBookRate(BookGeneralData currentBook)
+        public int getBookRate(BookGeneralData currentBook)
         {
             return databaseFunctions.getBookRate(currentBook, User);
         }
@@ -133,66 +178,66 @@ namespace BookstorePackage
         {
             return _instance;
         }
-        
 
 
 
-        internal bool checkIfUserExists(string login)
+
+        public bool checkIfUserExists(string login)
         {
             return databaseFunctions.checkIfUserExists(login);
         }
 
-        internal void removeCategoryFromLikedCategories(string categoryToRemove)
+        public void removeCategoryFromLikedCategories(string categoryToRemove)
         {
             databaseFunctions.removeCategoryFromLiked(categoryToRemove, User);
         }
 
-        internal void saveBookInToBuy(BookGeneralData bookToBeBoughtInFuture)
+        public void saveBookInToBuy(BookGeneralData bookToBeBoughtInFuture)
         {
             databaseFunctions.saveBookInToBuy(bookToBeBoughtInFuture, User);
         }
 
-        internal void removeBookfromToBuy(BookGeneralData bookToRemoveFromToBuy)
+        public void removeBookFromToBuy(BookGeneralData bookToRemoveFromToBuy)
         {
             databaseFunctions.removeBookfromToBuy(bookToRemoveFromToBuy,User);
         }
 
-        internal void deleteAccount(string login, string pswd)
+        public void deleteAccount()
         {
+            databaseFunctions.deleteAccount(User);
             User.logout();
-            databaseFunctions.deleteAccount(login, pswd);
         }
 
-        internal LinkedList<BookWithAuthors> searchByAuthor(string onlyLettersPhrase)
+        public LinkedList<BookWithAuthors> searchByAuthor(string onlyLettersPhrase)
         {
             return databaseFunctions.findBooksByAuthor(onlyLettersPhrase, User);
         }
 
-        internal bool checkIfNickExists(string nick)
+        public bool checkIfNickExists(string nick)
         {
             return databaseFunctions.checkIfNickExists(nick);
         }
-        internal void registerNewUser(string login, string password, string nick)
+        public void registerNewUser(string login, string password, string nick)
         {
             databaseFunctions.registerNewUser(login, password, nick, User);
         }
 
-        internal bool tryToLogin(string login, string password)
+        public bool tryToLogin(string login, string password)
         {
             return databaseFunctions.tryToLogin(login, password, User);
         }
 
-        internal LinkedList<BookWithAuthors> searchByTitle(string title)
+        public LinkedList<BookWithAuthors> searchByTitle(string title)
         {
             return databaseFunctions.findBooksByTitle(title,User);
         }
 
-        internal void setBookRate(BookGeneralData ratedBook, int rate)
+        public void setBookRate(BookGeneralData ratedBook, int rate)
         {
             databaseFunctions.setRate(ratedBook, User, rate);
         }
 
-        internal void viewBook(BookGeneralData bookToView)
+        public void viewBook(BookGeneralData bookToView)
         {
             databaseFunctions.viewBook(bookToView , User);
         }
@@ -249,12 +294,12 @@ namespace BookstorePackage
         public IRecommendationsComponent recommendationsFunctions { get; private set; }
         public RecommendationsGenerator recommendationsGenerator { get; private set; }
 
-        internal void unrateBook(BookGeneralData ratedBook)
+        public void unrateBook(BookGeneralData ratedBook)
         {
             databaseFunctions.unrate(ratedBook,User);
         }
 
-        internal void logout()
+        public void logout()
         {
             User.logout();
         }

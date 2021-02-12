@@ -120,7 +120,7 @@ namespace RecommendorsSystem
             DialogResult dialogResult = MessageBox.Show("delete account?", "Delete account", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                accountInterfaceObject.deleteAccount("dummy password");
+                accountInterfaceObject.deleteAccount();
                 navAcc.goToLogin();
             }
 

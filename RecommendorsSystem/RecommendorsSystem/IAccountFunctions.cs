@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace RecommendorsSystem
 {
-    public interface IAccountFunctions
+    public interface IAccountFunctions :IAccountSearchSharedFunctions
     {
         //void showRated();
         LinkedList<Book> getBoughtBooks();
         LinkedList<Book> getToBuyBooks();
         void removeBookFromToBuy(BookGeneralData bookToRemoveFromToBuy);
-        void buyBook(BookGeneralData bookToBuy);
+        //-- latest fix //void buyBook(BookGeneralData bookToBuy);
         LinkedList<Book> getRatedBooks();
-        void setBookRate(BookGeneralData ratedBook, int rate);
-        void unrateBook(BookGeneralData ratedBook);
+        //-- latest fix //void setBookRate(BookGeneralData ratedBook, int rate);
+        //-- latest fix //void unrateBook(BookGeneralData ratedBook);
         //bool passwordCorrect(string password);
         //void logoutAndGoToLogin();
-        void deleteAccount(string userPassword);
+        void deleteAccount();
         void logout();
-        int getBookRate(BookGeneralData currentBook);
+        //-- latest fix // int getBookRate(BookGeneralData currentBook);
     }
 }
