@@ -48,7 +48,7 @@ namespace RecommendorsSystem
 
         public void logOut()
         {
-            mainFormNavigation.clearInterfaces();
+            //mainFormNavigation.clearInterfaces();
         }
     }
 }

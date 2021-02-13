@@ -149,25 +149,8 @@ namespace RecommendorsSystem
         public int Id { private set; get; }
     }
 
-    public class UserRatesInfoSet
-    {
-        public int IdBook { private set; get; }
-        public int IdUser { private set; get; }
-        public int Rate { private set; get; }
-        public UserRatesInfoSet( int id_book, int id_user, int rate)
-        {
-            IdBook = id_book;
-            IdUser = id_user;
-            Rate = rate;
-        }
-    }
+    
 
-    public class Bonus
-    {
-        public int bonus_id;
-        public int multiplicator;
-        public DateTime begin;
-        public DateTime end;
-    }
+    
 
 }

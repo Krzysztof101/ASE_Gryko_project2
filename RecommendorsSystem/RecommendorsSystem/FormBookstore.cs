@@ -14,12 +14,12 @@ namespace RecommendorsSystem
 {
     public partial class FormBookstore : Form, IMainFormNavigation
     {
-        UserControlLogin uclog;
-        UserControlRegister ucreg;
+        //UserControlLogin uclog;
+        //UserControlRegister ucreg;
         UserControlAccount ucAcc;
         UserControlSearch ucSea;
-        UserControlShowCategs ucShCategs;
-        UserControlEditCategs ucEditCategs;
+        //UserControlShowCategs ucShCategs;
+        //UserControlEditCategs ucEditCategs;
         ILoginFunctions funLogin;
         INavLogin navLogin;
         IEditCategoriesFunctions funEditCategs;
@@ -52,11 +52,11 @@ namespace RecommendorsSystem
         public void initialize(Bookstore b)
         {
             navigation = new BookstoreNavFunctions(this);
-            uclog = new UserControlLogin(b, navigation);
-            ucreg = new UserControlRegister(b, navigation);
+            //uclog = new UserControlLogin(b, navigation);
+            //ucreg = new UserControlRegister(b, navigation);
             ucAcc = new UserControlAccount(b, navigation);
-            ucShCategs = new UserControlShowCategs(b, navigation);
-            ucEditCategs = new UserControlEditCategs(b, navigation);
+            //ucShCategs = new UserControlShowCategs(b, navigation);
+            //ucEditCategs = new UserControlEditCategs(b, navigation);
             ucSea = new UserControlSearch(b, navigation);
             funEditCategs = b;
             navEditCategs = navigation;
@@ -68,7 +68,7 @@ namespace RecommendorsSystem
             navRegister = navigation;
             
             this.Controls.Clear();
-            this.Controls.Add(uclog);
+            this.Controls.Add(new UserControlLogin(b, navigation));
             this.Refresh();
         }
 
@@ -76,23 +76,31 @@ namespace RecommendorsSystem
         {
             switchControl(ucAcc);
         }
+        
 
         public void goToEditCategories()
         {
-            ucEditCategs = new UserControlEditCategs(funEditCategs, navEditCategs);
-            switchControl(ucEditCategs);
+            switchControl(new UserControlEditCategs(funEditCategs, navEditCategs));
         }
 
         public void goToLogin()
         {
+            /*
             uclog = new UserControlLogin(funLogin, navLogin);
             switchControl(uclog);
+            */
+
+            switchControl(new UserControlLogin(funLogin, navLogin));
         }
 
         public void goToRegister()
         {
+            /*
             ucreg = new UserControlRegister(funRegister, navRegister);
             switchControl(ucreg);
+            */
+            
+            switchControl(new UserControlRegister(funRegister, navRegister));
         }
 
         public void goToSearch()
@@ -102,8 +110,12 @@ namespace RecommendorsSystem
 
         public void goToShowCategories()
         {
+            /*
             ucShCategs = new UserControlShowCategs(showCategs, navShowCategs);
             switchControl(ucShCategs);
+            */
+            
+            switchControl(new UserControlShowCategs(showCategs, navShowCategs));
         }
         private void switchControl(Control ccc)
         {
@@ -111,11 +123,12 @@ namespace RecommendorsSystem
             this.Controls.Add(ccc);
             this.Refresh();
         }
-
+        /*
         public void clearInterfaces()
         {
-            ucEditCategs.clearInterface();
-            ucShCategs.clearInterface();
+            //ucEditCategs.clearInterface();
+            //ucShCategs.clearInterface();
         }
+        */
     }
 }

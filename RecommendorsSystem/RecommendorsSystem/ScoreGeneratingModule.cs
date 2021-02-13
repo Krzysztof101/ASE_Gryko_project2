@@ -535,6 +535,27 @@ namespace RecommendorsSystem
         }
     }
 
+    public class Bonus
+    {
+        public int bonus_id { get; set; }
+        public int multiplicator { get; set; }
+        public DateTime begin { get; set; }
+        public DateTime end { get; set; }
+    }
+
+    public class UserRatesInfoSet
+    {
+        public int IdBook { private set; get; }
+        public int IdUser { private set; get; }
+        public int Rate { private set; get; }
+        public UserRatesInfoSet(int id_book, int id_user, int rate)
+        {
+            IdBook = id_book;
+            IdUser = id_user;
+            Rate = rate;
+        }
+    }
+
     public class AdminBonusesModule : ScoreGeneratingModule
     {
         public AdminBonusesModule(/*CurrentUser user*/) : base(/*user*/) { }

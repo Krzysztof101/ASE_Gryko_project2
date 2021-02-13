@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace RecommendorsSystem
 {
-    public class MsgBoxUtils
+    public static class MsgBoxUtils
     {
         public static void showMsgBox(string title, string text)
         {

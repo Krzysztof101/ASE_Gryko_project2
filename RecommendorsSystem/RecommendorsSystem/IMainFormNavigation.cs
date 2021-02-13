@@ -16,6 +16,6 @@ namespace NavigationInterfaces
         void goToShowCategories();
         void goToEditCategories();
         
-        void clearInterfaces();
+        //void clearInterfaces();
     }
 }

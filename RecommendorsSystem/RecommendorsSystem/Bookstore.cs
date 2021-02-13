@@ -198,7 +198,7 @@ namespace BookstorePackage
         private Bookstore(/*IMainFormNavigation imfn,*/ IDatabaseFunctions idbfuns, IRecommendationsComponent irecComp)
         {
             //BookstoreNavigation = new BookstoreNavFunctions(imfn);
-            passwordHandler = new RegisterHelper(this);
+            registerHelper = new RegisterHelper(this);
             //BookstoreFunctions = new BookstoreUIFunctions(this);
             recommendationsFunctions = irecComp;
             databaseFunctions = idbfuns;
@@ -240,7 +240,7 @@ namespace BookstorePackage
 
 
         //private static Lazy<Bookstore> instance = new Lazy<Bookstore>(() => new Bookstore());
-        private RegisterHelper passwordHandler;
+        private RegisterHelper registerHelper;
         private static Bookstore _instance = null;
         private static Object _mutex = new Object();
         public static Bookstore initialize(/*IMainFormNavigation imfn,*/ IDatabaseFunctions idbfuns, IRecommendationsComponent irecComp)
@@ -420,12 +420,12 @@ namespace BookstorePackage
 
         public bool checkIfCredentialsValid(string login, string password1, string password2, string nick)
         {
-            return passwordHandler.checkIfCredentialsValid(login, password1, password1, nick);
+            return registerHelper.checkIfCredentialsValid(login, password1, password1, nick);
         }
 
         public string getMessage()
         {
-            return passwordHandler.getMessage();
+            return registerHelper.getMessage();
         }
     }
 }

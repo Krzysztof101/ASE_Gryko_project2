@@ -61,7 +61,7 @@
             this.dataGridViewBooks.Name = "dataGridViewBooks";
             this.dataGridViewBooks.RowHeadersWidth = 51;
             this.dataGridViewBooks.RowTemplate.Height = 24;
-            this.dataGridViewBooks.Size = new System.Drawing.Size(337, 309);
+            this.dataGridViewBooks.Size = new System.Drawing.Size(439, 309);
             this.dataGridViewBooks.TabIndex = 0;
             this.dataGridViewBooks.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewBooks_CellContentClick);
             this.dataGridViewBooks.SelectionChanged += new System.EventHandler(this.dataGridViewBooks_SelectionChanged);
@@ -242,7 +242,7 @@
             this.Controls.Add(this.buttonSearch);
             this.Controls.Add(this.dataGridViewBooks);
             this.Name = "UserControlAccount";
-            this.Size = new System.Drawing.Size(606, 338);
+            this.Size = new System.Drawing.Size(704, 338);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBooks)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
