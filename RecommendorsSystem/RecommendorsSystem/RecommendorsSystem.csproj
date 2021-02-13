@@ -50,7 +50,6 @@
     <Compile Include="BookInfoContainer.cs" />
     <Compile Include="Bookstore.cs" />
     <Compile Include="BookstoreNavFunctions.cs" />
-    <Compile Include="BookstoreUIFunctions.cs" />
     <Compile Include="CurrentUser.cs" />
     <Compile Include="DatabasePackagingClass.cs" />
     <Compile Include="FormBookstore.cs">

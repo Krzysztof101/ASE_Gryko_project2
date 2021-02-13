@@ -70,7 +70,7 @@ namespace RecommendorsSystem
 
     internal class FunctionsUtils
     {
-        public static int countSameCategoriesBooks(BookGeneralData book, LinkedList<Book> boughtBooks, IRecommendationsGetters dbPackingClass)
+        public static int countSameCategoriesBooks(BookGeneralData book, LinkedList<BookGeneralData> boughtBooks, IRecommendationsGetters dbPackingClass)
         {
             int totalSimilarCategsCount = 0;
             LinkedList<string> thisBookCategs = dbPackingClass.getBookCategories(book);
@@ -91,7 +91,7 @@ namespace RecommendorsSystem
             return totalSimilarCategsCount;
         }
 
-        public static int countAllSameAuthors(BookGeneralData thisBook, LinkedList<Book> Books, IRecommendationsGetters dbPackingClass)
+        public static int countAllSameAuthors(BookGeneralData thisBook, LinkedList<BookGeneralData> Books, IRecommendationsGetters dbPackingClass)
         {
             LinkedList<Author> thisBookAuthors = dbPackingClass.getBookAuthors(thisBook);
 
@@ -129,7 +129,7 @@ namespace RecommendorsSystem
         {
             if (!ModuleInfo.Active)
             {
-                LinkedList<Book> boughtBooks = dbPackingClass.getBoughtBooks(user);
+                LinkedList<BookGeneralData> boughtBooks = dbPackingClass.getBoughtBooks(user);
                 int totalSimilarCategsCount = FunctionsUtils.countSameCategoriesBooks(book, boughtBooks, dbPackingClass);
                 
                 int boughtBooksWithTheSameAuthor = FunctionsUtils.countAllSameAuthors(book, boughtBooks, dbPackingClass);
@@ -184,7 +184,7 @@ namespace RecommendorsSystem
         {
             if(ModuleInfo.Active)
             {
-                LinkedList<Book> booksToBuy = dbPackingClass.getToBuyBooks(user);
+                LinkedList<BookGeneralData> booksToBuy = dbPackingClass.getToBuyBooks(user);
                 int booksWithTheSameCategs = FunctionsUtils.countSameCategoriesBooks(book, booksToBuy, dbPackingClass);
 
                 int booksWithTheSameAuthors = FunctionsUtils.countAllSameAuthors(book, booksToBuy, dbPackingClass);
@@ -470,7 +470,7 @@ namespace RecommendorsSystem
         {
             if(ModuleInfo.Active)
             {
-                LinkedList<Book> recentlyRecommended = dbPackingClass.getBooksRecommendedWithin05h(user);
+                LinkedList<BookGeneralData> recentlyRecommended = dbPackingClass.getBooksRecommendedWithin05h(user);
                 int bonus = 0;
                 foreach(Book b in recentlyRecommended)
                 {

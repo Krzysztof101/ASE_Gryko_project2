@@ -15,9 +15,9 @@ namespace RecommendorsSystem
 
     public interface IDatabaseGetters
     {
-        LinkedList<Book> getBoughtBooks(CurrentUser user);
-        LinkedList<Book> getToBuyBooks(CurrentUser user);
-        LinkedList<Book> getRatedBooks(CurrentUser user);
+        LinkedList<BookGeneralData> getBoughtBooks(CurrentUser user);
+        LinkedList<BookGeneralData> getToBuyBooks(CurrentUser user);
+        LinkedList<BookGeneralData> getRatedBooks(CurrentUser user);
         LinkedList<string> getAllCategories();
         LinkedList<string> getLikedCategories(CurrentUser user);
         //bool checkIfCredentialsAreValid(string login, string password);
@@ -35,7 +35,7 @@ namespace RecommendorsSystem
         int getNewBooksBonus(BookGeneralData book);
         LinkedList<UserRatesInfoSet> getAllRowsInRates(BookGeneralData book);
         LinkedList<BookGeneralData> getBooksWithGeneralDataWithin05hour(CurrentUser user);
-        LinkedList<Book> getBooksRecommendedWithin05h(CurrentUser user);
+        LinkedList<BookGeneralData> getBooksRecommendedWithin05h(CurrentUser user);
     }
 
 

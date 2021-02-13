@@ -50,7 +50,7 @@ namespace RecommendorsSystem
             else
             {
                 string msg = iRegFunctions.getMessage();
-                MsgBoxUtils.showMsgBox("Register", msg);
+                UserControlLogin.showMsgBox("Register", msg);
             }
         }
         /*

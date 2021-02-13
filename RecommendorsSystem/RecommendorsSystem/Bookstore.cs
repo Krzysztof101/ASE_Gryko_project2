@@ -9,7 +9,7 @@ using NavigationInterfaces;
 
 namespace BookstorePackage
 {
-    public interface IBookstoreBookstoreUIFunctions :IAccountFunctions, IEditCategoriesFunctions, ILoginFunctions, ISearchPanelFunctions, IShowCategoriesFunctions
+    public interface IBookstoreUIFunctions :IAccountFunctions, IEditCategoriesFunctions, ILoginFunctions, ISearchPanelFunctions, IShowCategoriesFunctions, IRegisterFunctions
     {
         //IAccountFunctions
         /*
@@ -77,16 +77,129 @@ namespace BookstorePackage
         bool checkIfUserExists(string login);
         bool checkIfNickExists(string nick);
         //-- from parent interface --//LinkedList<BookWithAuthors> searchByAuthor(string onlyLettersPhrase);
-        void registerNewUser(string login, string password, string nick);
+        //void registerNewUser(string login, string password, string nick);
 
     }
 
-    public class Bookstore :IBookstoreBookstoreUIFunctions
+    public class Bookstore :IBookstoreUIFunctions
     {
-        private Bookstore(IMainFormNavigation imfn, IDatabaseFunctions idbfuns, IRecommendationsComponent irecComp)
+        class RegisterHelper 
         {
-            BookstoreNavigation = new BookstoreNavFunctions(imfn);
-            BookstoreFunctions = new BookstoreUIFunctions(this);
+            Bookstore owner;
+            string registerMessage;
+            public RegisterHelper(Bookstore owner)
+            {
+                this.owner = owner;
+                registerMessage = "";
+            }
+            public bool checkIfCredentialsValid(string login, string password1, string password2, string nick)
+            {
+                string checkResult = checkCredentials(login, password1, password2, nick);
+                string allGood = "";
+                if (checkResult == allGood)
+                {
+                    bool nickNotTaken = true, loginNotTaken = true;
+                    if (owner.checkIfUserExists(login))
+                    {
+                        loginNotTaken = false;
+                    }
+                    if (owner.checkIfNickExists(nick))
+                    {
+                        nickNotTaken = false;
+                    }
+                    if (nickNotTaken && loginNotTaken)
+                    {
+
+                        return true;
+                    }
+                    if (!nickNotTaken && !loginNotTaken)
+                    {
+                        checkResult = "Both nick and login already exist";
+                    }
+                    else if (!nickNotTaken)
+                    {
+                        checkResult = "Nick already exist";
+                    }
+                    else
+                    {
+                        checkResult = "Login already exist";
+                    }
+                }
+                registerMessage = checkResult;
+                return false;
+            }
+
+            public string getMessage()
+            {
+                return registerMessage;
+            }
+
+            public void registerNewUser(string user, string password, string nick)
+            {
+                owner.registerNewUser(user, password, nick);
+            }
+            private string checkCredentials(string user, string pswd1, string pswd2, string nick)
+            {
+
+                if (user.Length == 0 || pswd1.Length == 0 || pswd2.Length == 0 || nick.Length == 0)
+                {
+                    return "All text fields must be filled";
+                }
+                if (pswd1 != pswd2)
+                {
+                    return "Passwords not matching";
+                }
+                if (!passwordStrong(pswd1))
+                {
+                    return "Password must contain min. 8 characters, one upper and one lower case letter, digit and special character";
+                }
+                return "";
+            }
+            private bool passwordStrong(string pswd)
+            {
+                if (pswd.Length < 8)
+                {
+                    return false;
+                }
+                string specialChars = "!@#$%^&*()";
+                string numbers = "1234567890";
+                string lowerCaseLetters = "zxcvbnmasdfghjklqwertyuiop";
+                string uppercaseLetters = lowerCaseLetters.ToUpper();
+                if (!containsOneOfChars(pswd, specialChars))
+                {
+                    return false;
+                }
+                if (!containsOneOfChars(pswd, numbers))
+                {
+                    return false;
+                }
+                if (!containsOneOfChars(pswd, lowerCaseLetters))
+                {
+                    return false;
+                }
+                if (!containsOneOfChars(pswd, uppercaseLetters))
+                {
+                    return false;
+                }
+                return true;
+            }
+            private bool containsOneOfChars(string pswd, string chars)
+            {
+                foreach (char c in chars)
+                {
+                    if (pswd.Contains(c))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+        private Bookstore(/*IMainFormNavigation imfn,*/ IDatabaseFunctions idbfuns, IRecommendationsComponent irecComp)
+        {
+            //BookstoreNavigation = new BookstoreNavFunctions(imfn);
+            passwordHandler = new RegisterHelper(this);
+            //BookstoreFunctions = new BookstoreUIFunctions(this);
             recommendationsFunctions = irecComp;
             databaseFunctions = idbfuns;
             User = new CurrentUser();
@@ -127,9 +240,10 @@ namespace BookstorePackage
 
 
         //private static Lazy<Bookstore> instance = new Lazy<Bookstore>(() => new Bookstore());
+        private RegisterHelper passwordHandler;
         private static Bookstore _instance = null;
         private static Object _mutex = new Object();
-        public static Bookstore initialize(IMainFormNavigation imfn, IDatabaseFunctions idbfuns, IRecommendationsComponent irecComp)
+        public static Bookstore initialize(/*IMainFormNavigation imfn,*/ IDatabaseFunctions idbfuns, IRecommendationsComponent irecComp)
         {
             if(_instance==null)
             {
@@ -137,7 +251,7 @@ namespace BookstorePackage
                 {
                     if(_instance==null)
                     {
-                        _instance = new Bookstore(imfn, idbfuns, irecComp);
+                        _instance = new Bookstore(/*imfn,*/ idbfuns, irecComp);
                     }
                 }
             }
@@ -149,17 +263,17 @@ namespace BookstorePackage
             return databaseFunctions.getLikedCategories(User);
         }
 
-        public LinkedList<Book> getRatedBooks()
+        public LinkedList<BookGeneralData> getRatedBooks()
         {
             return databaseFunctions.getRatedBooks(User);
         }
 
-        public LinkedList<Book> getToBuyBooks()
+        public LinkedList<BookGeneralData> getToBuyBooks()
         {
             return databaseFunctions.getToBuyBooks(User);
         }
 
-        public LinkedList<Book> getBoughtBooks()
+        public LinkedList<BookGeneralData> getBoughtBooks()
         {
             return databaseFunctions.getBoughtBooks(User);
         }
@@ -288,8 +402,8 @@ namespace BookstorePackage
 
         public CurrentUser User { get; set; }
 
-        public BookstoreNavFunctions BookstoreNavigation { get; private set; }
-        public BookstoreUIFunctions BookstoreFunctions { get; private set; }
+        //public BookstoreNavFunctions BookstoreNavigation { get; private set; }
+        //public BookstoreUIFunctions BookstoreFunctions { get; private set; }
         public IDatabaseFunctions databaseFunctions { get; private set; }
         public IRecommendationsComponent recommendationsFunctions { get; private set; }
         public RecommendationsGenerator recommendationsGenerator { get; private set; }
@@ -302,6 +416,16 @@ namespace BookstorePackage
         public void logout()
         {
             User.logout();
+        }
+
+        public bool checkIfCredentialsValid(string login, string password1, string password2, string nick)
+        {
+            return passwordHandler.checkIfCredentialsValid(login, password1, password1, nick);
+        }
+
+        public string getMessage()
+        {
+            return passwordHandler.getMessage();
         }
     }
 }

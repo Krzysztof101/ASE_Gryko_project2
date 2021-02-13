@@ -41,7 +41,7 @@ namespace RecommendorsSystem
             string passwordText = textBoxPassword.Text;
             if(loginText.Length==0 || passwordText.Length==0)
             {
-                MsgBoxUtils.showMsgBox("Login", "Login and password cannot be empty.");
+                showMsgBox("Login", "Login and password cannot be empty.");
                 return;
             }
             if(loginFunctions.tryToLogin(loginText,passwordText))
@@ -52,9 +52,14 @@ namespace RecommendorsSystem
             }
             else
             {
-                MsgBoxUtils.showMsgBox("Login", "Incorrect login or password.");
+                showMsgBox("Login", "Incorrect login or password.");
             }
             
         }
+        public static void showMsgBox(string title, string text)
+        {
+            MessageBox.Show(text, title);
+        }
     }
+
 }

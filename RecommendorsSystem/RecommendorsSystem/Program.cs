@@ -23,7 +23,7 @@ namespace RecommendorsSystem
             FormBookstore f1 = new FormBookstore();
             DatabasePackagingClass db = DatabasePackagingClass.instance;
             db.initializeAndConnect();
-            Bookstore b = Bookstore.initialize(f1,db, db);
+            Bookstore b = Bookstore.initialize(/*f1,*/db, db);
             f1.initialize(b);
             Application.Run(f1);
         }

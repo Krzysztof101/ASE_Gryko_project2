@@ -28,6 +28,7 @@ namespace RecommendorsSystem
         INavShowCategories navShowCategs;
         IRegisterFunctions funRegister;
         INavRegister navRegister;
+        BookstoreNavFunctions navigation;
 
         public FormBookstore()
         {
@@ -50,20 +51,21 @@ namespace RecommendorsSystem
         }
         public void initialize(Bookstore b)
         {
-            uclog = new UserControlLogin(b.BookstoreFunctions, b.BookstoreNavigation);
-            ucreg = new UserControlRegister(b.BookstoreFunctions, b.BookstoreNavigation);
-            ucAcc = new UserControlAccount(b.BookstoreFunctions, b.BookstoreNavigation);
-            ucShCategs = new UserControlShowCategs(b.BookstoreFunctions,b.BookstoreNavigation);
-            ucEditCategs = new UserControlEditCategs(b.BookstoreFunctions, b.BookstoreNavigation);
-            ucSea = new UserControlSearch(b.BookstoreFunctions, b.BookstoreNavigation);
-            funEditCategs = b.BookstoreFunctions;
-            navEditCategs = b.BookstoreNavigation;
-            showCategs = b.BookstoreFunctions;
-            navShowCategs = b.BookstoreNavigation;
-            funLogin = b.BookstoreFunctions;
-            navLogin = b.BookstoreNavigation;
-            funRegister = b.BookstoreFunctions;
-            navRegister = b.BookstoreNavigation;
+            navigation = new BookstoreNavFunctions(this);
+            uclog = new UserControlLogin(b, navigation);
+            ucreg = new UserControlRegister(b, navigation);
+            ucAcc = new UserControlAccount(b, navigation);
+            ucShCategs = new UserControlShowCategs(b, navigation);
+            ucEditCategs = new UserControlEditCategs(b, navigation);
+            ucSea = new UserControlSearch(b, navigation);
+            funEditCategs = b;
+            navEditCategs = navigation;
+            showCategs = b;
+            navShowCategs = navigation;
+            funLogin = b;
+            navLogin = navigation;
+            funRegister = b;
+            navRegister = navigation;
             
             this.Controls.Clear();
             this.Controls.Add(uclog);

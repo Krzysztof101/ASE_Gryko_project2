@@ -116,7 +116,7 @@ namespace DatabasePackage
 
         
 
-        public LinkedList<Book> getBoughtBooks(CurrentUser user)
+        public LinkedList<BookGeneralData> getBoughtBooks(CurrentUser user)
         {
             
             string query = "select distinct b.ID_book, b.Title, b.Price, b.PriceMinusDiscountInProcent from Books b join" +
@@ -126,12 +126,12 @@ namespace DatabasePackage
             SqlCommand oCmd = new SqlCommand(query, cnn);
             oCmd.Parameters.AddWithValue("@userID", user.id);
             
-            LinkedList<Book> result = new LinkedList<Book>();
+            LinkedList<BookGeneralData> result = new LinkedList<BookGeneralData>();
             using (SqlDataReader oReader = oCmd.ExecuteReader())
             {
                 while (oReader.Read())
                 {
-                    Book book = new Book();
+                    BookGeneralData book = new Book();
                     book.id = oReader.GetInt32(0);
                     book.title = oReader.GetString(1);
                     book.price = (decimal) oReader.GetSqlMoney(2);
@@ -164,9 +164,9 @@ namespace DatabasePackage
 
         }
 
-        public LinkedList<Book> getRatedBooks(CurrentUser user)
+        public LinkedList<BookGeneralData> getRatedBooks(CurrentUser user)
         {
-            LinkedList<Book> result = new LinkedList<Book>();
+            LinkedList<BookGeneralData> result = new LinkedList<BookGeneralData>();
             string query = "select distinct b.ID_book, b.Title, b.Price, b.PriceMinusDiscountInProcent from Books b join " +
                 " UsersBooksRates a on a.ID_book= b.ID_book where a.ID_user=@loggedUser";
 
@@ -189,9 +189,9 @@ namespace DatabasePackage
             return result;
         }
 
-        public LinkedList<Book> getToBuyBooks(CurrentUser user)
+        public LinkedList<BookGeneralData> getToBuyBooks(CurrentUser user)
         {
-            LinkedList<Book> result = new LinkedList<Book>();
+            LinkedList<BookGeneralData> result = new LinkedList<BookGeneralData>();
             string query = "select distinct b.ID_book, b.Title, b.Price, b.PriceMinusDiscountInProcent from Books b join " +
                 " UserBooksToBuy a on a.ID_book= b.ID_book where a.ID_user=@loggedUser";
 
@@ -983,14 +983,14 @@ namespace DatabasePackage
 
         }
 
-        public LinkedList<Book> getBooksRecommendedWithin05h(CurrentUser user)
+        public LinkedList<BookGeneralData> getBooksRecommendedWithin05h(CurrentUser user)
         {
             string commandText = "select books.ID_book, title, price, priceMinusDiscountInProcent from books join UserBooksRecommendations on books.ID_book =  UserBooksRecommendations.ID_book where id_user=@userId and DATEDIFF(MINUTE, DateOfRecommendating, getDate())<=@minutes";
             SqlCommand command2 = new SqlCommand(commandText, cnn);
             command2.Parameters.AddWithValue("@userId", user.id);
             command2.Parameters.AddWithValue("@minutes", 120);
             command2.CommandType = CommandType.Text;
-            LinkedList<Book> recentlyRecommendedBooks = new LinkedList<Book>();
+            LinkedList<BookGeneralData> recentlyRecommendedBooks = new LinkedList<BookGeneralData>();
             using (SqlDataReader oReader = command2.ExecuteReader())
             {
 
@@ -1001,7 +1001,7 @@ namespace DatabasePackage
                     decimal price = (decimal)(oReader.GetSqlMoney(2));
                     int priceMinusdiscount = oReader.GetInt32(3);
 
-                    Book b = new Book();
+                    BookGeneralData b = new Book();
                     b.id = book_id;
                     b.title = title;
                     b.price = price;

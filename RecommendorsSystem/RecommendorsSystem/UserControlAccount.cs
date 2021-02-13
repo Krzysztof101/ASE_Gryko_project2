@@ -136,7 +136,7 @@ namespace RecommendorsSystem
         void getToBuyBooks()
         {
             dataGridViewBooks.Rows.Clear();
-            LinkedList<Book> booksToBuy = accountInterfaceObject.getToBuyBooks();
+            LinkedList<BookGeneralData> booksToBuy = accountInterfaceObject.getToBuyBooks();
             foreach (Book book in booksToBuy)
             {
                 dataGridViewBooks.Rows.Add(new BookContainerId(book), new BookContainerTitle(book));
@@ -155,7 +155,7 @@ namespace RecommendorsSystem
         private void getRatedBooks()
         {
             dataGridViewBooks.Rows.Clear();
-            LinkedList<Book> ratedBooks = accountInterfaceObject.getRatedBooks();
+            LinkedList<BookGeneralData> ratedBooks = accountInterfaceObject.getRatedBooks();
             foreach (Book book in ratedBooks)
             {
                 dataGridViewBooks.Rows.Add(new BookContainerId(book), new BookContainerTitle(book));
@@ -215,7 +215,7 @@ namespace RecommendorsSystem
         private void getBoughtBooks()
         {
             dataGridViewBooks.Rows.Clear();
-            LinkedList<Book> boughtBooks = accountInterfaceObject.getBoughtBooks();
+            LinkedList<BookGeneralData> boughtBooks = accountInterfaceObject.getBoughtBooks();
             foreach (Book book in boughtBooks)
             {
                 dataGridViewBooks.Rows.Add(new BookContainerId(book), new BookContainerTitle(book));
