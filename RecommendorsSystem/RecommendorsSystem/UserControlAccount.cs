@@ -39,6 +39,7 @@ namespace RecommendorsSystem
             {
                 owner.buttonBuy.Enabled = false;
                 owner.buttonRemoveFromToBuy.Enabled = false;
+                owner.textBoxQuantity.Enabled = false;
             }
 
             public void setTobuy() { memory = typeOfLastList.toBuy; activateBuyButtons(); }
@@ -47,6 +48,8 @@ namespace RecommendorsSystem
             {
                 owner.buttonBuy.Enabled = true;
                 owner.buttonRemoveFromToBuy.Enabled = true;
+                owner.textBoxQuantity.Enabled = true;
+                owner.labelTitle.Text = "Books to buy";
             }
 
             public void setBought() { memory = typeOfLastList.bought; disableBuyButtons(); }
@@ -143,7 +146,7 @@ namespace RecommendorsSystem
             }
             dataGridViewBooks.ClearSelection();
             comboBox1.SelectedIndex = -1;
-            labelTitle.Text = "Books to buy";
+            
         }
 
         private void buttonRated_Click(object sender, EventArgs e)
@@ -280,10 +283,37 @@ namespace RecommendorsSystem
         {
             if (guiManager.DGVhasSelectedCell())
             {
+                int quantity = 0;
+                try
+                {
+                    quantity = Convert.ToInt32(textBoxQuantity.Text);
+                }
+                catch(Exception) 
+                {
+                    MessageBox.Show("Quantity must be integer value greater than 0 and lesser or equal than number of books available");
+                    return;
+                }
+                
+
                 BookGeneralData toBuy = getSelectedBook();
                 if (toBuy != null)
                 {
-                    accountInterfaceObject.buyBook(toBuy);
+                    /*
+                    if(quantity<=0 || quantity >= toBuy.Quantity)
+                    {
+                        MessageBox.Show("Quantity must be integer value greater than 0 and lesser or equal than number of books available");
+                        return;
+                    }
+                    */
+                    string msg = accountInterfaceObject.buyBook(toBuy, quantity);
+                    if(msg!=accountInterfaceObject.operationSuccesful())
+                    {
+                        MessageBox.Show(msg);
+                    }
+                    else
+                    {
+                        toBuy.Quantity -= quantity;
+                    }
                     guiManager.reloadLastOperation();
 
                 }

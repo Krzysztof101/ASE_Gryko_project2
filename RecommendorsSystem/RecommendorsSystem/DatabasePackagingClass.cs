@@ -72,7 +72,7 @@ namespace DatabasePackage
 
         
 
-        public void buyBook(BookGeneralData book, CurrentUser user)
+        public void buyBook(BookGeneralData book, CurrentUser user, int quantity)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace DatabasePackage
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@bookId", book.id);
                 cmd.Parameters.AddWithValue("@userId", user.id);
-                cmd.Parameters.AddWithValue("@howMany", 1);
+                cmd.Parameters.AddWithValue("@howMany", quantity);
 
                 int rowAffected = cmd.ExecuteNonQuery();
             }
@@ -192,7 +192,7 @@ namespace DatabasePackage
         public LinkedList<BookGeneralData> getToBuyBooks(CurrentUser user)
         {
             LinkedList<BookGeneralData> result = new LinkedList<BookGeneralData>();
-            string query = "select distinct b.ID_book, b.Title, b.Price, b.PriceMinusDiscountInProcent from Books b join " +
+            string query = "select distinct b.ID_book, b.Title, b.Price, b.PriceMinusDiscountInProcent, b.quantity, b.start_selling_date, b.deleted from Books b join " +
                 " UserBooksToBuy a on a.ID_book= b.ID_book where a.ID_user=@loggedUser";
 
             SqlCommand oCmd = new SqlCommand(query, cnn);
@@ -207,6 +207,9 @@ namespace DatabasePackage
                     book.title = oReader.GetString(1);
                     book.price = (decimal)oReader.GetSqlMoney(2);
                     book.priceMinusDiscountInProcent = (int)oReader.GetSqlInt32(3);
+                    book.Quantity = oReader.GetInt32(4);
+                    book.StartSellingDate = oReader.GetDateTime(5);
+                    book.Deleted = oReader.GetBoolean(6);
 
                     result.AddLast(book);
                 }
@@ -469,23 +472,28 @@ namespace DatabasePackage
         private LinkedList<BookGeneralData> getBooksUsingQueryID(int queryID)
         {
             //po naprawie - ksiazka
-            string commandText = "select * from getNumberSearchByTitleResults(" + queryID.ToString() + ")";
+            string commandText = "select * from getNumberSearchByTitleResults(@arg_queryID)";
             SqlCommand command = new SqlCommand(commandText, cnn);
+            command.Parameters.AddWithValue("@arg_queryID", queryID);
             command.CommandType = CommandType.Text;
             LinkedList<BookGeneralData> books = new LinkedList<BookGeneralData>();
-
+            LinkedList<int> ids = new LinkedList<int>();
             using (SqlDataReader oReader = command.ExecuteReader())
             {
                 while (oReader.Read())
                 {
+                    ids.AddLast(oReader.GetInt32(0));
+                    
                     BookGeneralData book = new Book();
                     book.id = oReader.GetInt32(0);
                     book.title = oReader.GetString(1);
                     book.price = (decimal)oReader.GetSqlMoney(2);
                     book.priceMinusDiscountInProcent = (int)oReader.GetSqlInt32(3);
-                    //var listOfBookAuthors = getBookAuthors(book);
-                    //book.Authors = listOfBookAuthors;
+                    book.Quantity = oReader.GetInt32(4);
+                    book.StartSellingDate = oReader.GetDateTime(5);
+                    book.Deleted = oReader.GetBoolean(6);
                     books.AddLast(book);
+                    
                 }
             }
             //LinkedList<BookWithAuthors> listBooksAuthors =  getBooksWithAuthors(books);
@@ -494,9 +502,9 @@ namespace DatabasePackage
 
             return books;
         }
-        private LinkedList<BookWithAuthors> getBooksWithAuthors(LinkedList<BookGeneralData> books)
+        private LinkedList<BookWithAuthorsAndCategories> getBooksWithAuthors(LinkedList<BookGeneralData> books)
         {
-            LinkedList<BookWithAuthors> listOfBooksWithAuthors = new LinkedList<BookWithAuthors>();
+            LinkedList<BookWithAuthorsAndCategories> listOfBooksWithAuthors = new LinkedList<BookWithAuthorsAndCategories>();
             foreach (BookGeneralData book in books)
             {
                 int bookID = book.id;
@@ -518,7 +526,7 @@ namespace DatabasePackage
                     }
                 }
                 //BookWithAuthors bookAuthors = new BookWithAuthors(book, authors);
-                BookWithAuthors bookAuthors = new Book();
+                BookWithAuthorsAndCategories bookAuthors = new Book();
                 bookAuthors.setGeneralDataFromOtherBook(book);
                 bookAuthors.Authors = authors;
                 
@@ -529,12 +537,12 @@ namespace DatabasePackage
             return listOfBooksWithAuthors;
         }
         
-        public LinkedList<BookWithAuthors> findBooksByTitle(string title, CurrentUser user)
+        public LinkedList<BookWithAuthorsAndCategories> findBooksByTitle(string title, CurrentUser user)
         {
             title = title.Trim(' ');
             if (title == "")
             {
-                return new LinkedList<BookWithAuthors>();
+                return new LinkedList<BookWithAuthorsAndCategories>();
             }
 
             int queryID = getQueryIdFromFindByTitleStoredProcedure(title, user);
@@ -542,16 +550,19 @@ namespace DatabasePackage
             if(queryID==0)
             {
                 //queryID = 0 ----- query didn't find any books
-                return new LinkedList<BookWithAuthors>();
+                return new LinkedList<BookWithAuthorsAndCategories>();
             }
 
             LinkedList<BookGeneralData> booksGenData = getBooksUsingQueryID(queryID);
-            LinkedList<BookWithAuthors> booksWithAuthors = new LinkedList<BookWithAuthors>();
+            LinkedList<BookWithAuthorsAndCategories> booksWithAuthors = new LinkedList<BookWithAuthorsAndCategories>();
+            
             
             foreach (BookGeneralData book in booksGenData)
             {
                 var listOfAuthors = getBookAuthors(book);
-                BookWithAuthors b = new Book(book);
+                LinkedList<string> bookCategories = getBookCategories(book);
+                BookWithAuthorsAndCategories b = new Book(book);
+                b.Categories = bookCategories;
                 b.Authors = listOfAuthors;
                 booksWithAuthors.AddLast(b);
             }
@@ -655,23 +666,23 @@ namespace DatabasePackage
 
         
 
-        public LinkedList<BookWithAuthors> findBooksByAuthor(string authors, CurrentUser user)
+        public LinkedList<BookWithAuthorsAndCategories> findBooksByAuthor(string authors, CurrentUser user)
         {
             if(authors=="")
             {
-                return new LinkedList<BookWithAuthors>();
+                return new LinkedList<BookWithAuthorsAndCategories>();
             }
             int queryID = getQueryIdFromFindByAuthorsStoredProcedure(authors, user);
             if(queryID==0)
             {
-                return new LinkedList<BookWithAuthors>();
+                return new LinkedList<BookWithAuthorsAndCategories>();
             }
             LinkedList<BookGeneralData> booksGenData = getBooksUsingQueryID(queryID);
-            LinkedList<BookWithAuthors> booksWithAuthors = new LinkedList<BookWithAuthors>();
+            LinkedList<BookWithAuthorsAndCategories> booksWithAuthors = new LinkedList<BookWithAuthorsAndCategories>();
             foreach (Book book in booksGenData)
             {
                 var listOfAuthors = getBookAuthors(book);
-                BookWithAuthors b = new Book(book);
+                BookWithAuthorsAndCategories b = new Book(book);
                 b.Authors = listOfAuthors;
                 booksWithAuthors.AddLast(b);
 
@@ -738,7 +749,7 @@ namespace DatabasePackage
             throw new NotImplementedException();
         }
 
-        public LinkedList<BookWithAuthors> getAllBookWithAuthors(CurrentUser user)
+        public LinkedList<BookWithAuthorsAndCategories> getAllBookWithAuthors(CurrentUser user)
         {
             LinkedList<BookGeneralData> books = new LinkedList<BookGeneralData>();
             SqlCommand command1 = new SqlCommand("Select * from Books", cnn);

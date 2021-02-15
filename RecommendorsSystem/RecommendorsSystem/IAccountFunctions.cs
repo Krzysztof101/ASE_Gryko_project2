@@ -8,15 +8,17 @@ namespace RecommendorsSystem
     public interface IAccountFunctions :IAccountSearchSharedFunctions
     {
         //void showRated();
-        LinkedList<BookGeneralData> getBoughtBooks();
-        LinkedList<BookGeneralData> getToBuyBooks();
-        void removeBookFromToBuy(BookGeneralData bookToRemoveFromToBuy);
+
         //-- latest fix //void buyBook(BookGeneralData bookToBuy);
-        LinkedList<BookGeneralData> getRatedBooks();
+
         //-- latest fix //void setBookRate(BookGeneralData ratedBook, int rate);
         //-- latest fix //void unrateBook(BookGeneralData ratedBook);
         //bool passwordCorrect(string password);
         //void logoutAndGoToLogin();
+        LinkedList<BookGeneralData> getBoughtBooks();
+        LinkedList<BookGeneralData> getToBuyBooks();
+        void removeBookFromToBuy(BookGeneralData bookToRemoveFromToBuy);
+        LinkedList<BookGeneralData> getRatedBooks();
         void deleteAccount();
         void logout();
         //-- latest fix // int getBookRate(BookGeneralData currentBook);

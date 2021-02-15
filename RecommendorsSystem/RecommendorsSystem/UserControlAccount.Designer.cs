@@ -45,6 +45,8 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.buttonLogout = new System.Windows.Forms.Button();
             this.labelTitle = new System.Windows.Forms.Label();
+            this.labelQuantity = new System.Windows.Forms.Label();
+            this.textBoxQuantity = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBooks)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -130,9 +132,9 @@
             // 
             // buttonBuy
             // 
-            this.buttonBuy.Location = new System.Drawing.Point(96, 36);
+            this.buttonBuy.Location = new System.Drawing.Point(159, 36);
             this.buttonBuy.Name = "buttonBuy";
-            this.buttonBuy.Size = new System.Drawing.Size(87, 46);
+            this.buttonBuy.Size = new System.Drawing.Size(79, 46);
             this.buttonBuy.TabIndex = 5;
             this.buttonBuy.Text = "buy book";
             this.buttonBuy.UseVisualStyleBackColor = true;
@@ -143,7 +145,7 @@
             this.buttonToBuyBooks.AutoSize = true;
             this.buttonToBuyBooks.Location = new System.Drawing.Point(3, 3);
             this.buttonToBuyBooks.Name = "buttonToBuyBooks";
-            this.buttonToBuyBooks.Size = new System.Drawing.Size(180, 27);
+            this.buttonToBuyBooks.Size = new System.Drawing.Size(228, 27);
             this.buttonToBuyBooks.TabIndex = 6;
             this.buttonToBuyBooks.Text = "show to buy books";
             this.buttonToBuyBooks.UseVisualStyleBackColor = true;
@@ -172,12 +174,14 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.textBoxQuantity);
+            this.panel1.Controls.Add(this.labelQuantity);
             this.panel1.Controls.Add(this.buttonToBuyBooks);
             this.panel1.Controls.Add(this.buttonRemoveFromToBuy);
             this.panel1.Controls.Add(this.buttonBuy);
             this.panel1.Location = new System.Drawing.Point(3, 117);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(186, 86);
+            this.panel1.Size = new System.Drawing.Size(241, 86);
             this.panel1.TabIndex = 9;
             // 
             // comboBox1
@@ -228,6 +232,22 @@
             this.labelTitle.Size = new System.Drawing.Size(0, 17);
             this.labelTitle.TabIndex = 14;
             // 
+            // labelQuantity
+            // 
+            this.labelQuantity.AutoSize = true;
+            this.labelQuantity.Location = new System.Drawing.Point(95, 36);
+            this.labelQuantity.Name = "labelQuantity";
+            this.labelQuantity.Size = new System.Drawing.Size(58, 17);
+            this.labelQuantity.TabIndex = 7;
+            this.labelQuantity.Text = "quantity";
+            // 
+            // textBoxQuantity
+            // 
+            this.textBoxQuantity.Location = new System.Drawing.Point(98, 56);
+            this.textBoxQuantity.Name = "textBoxQuantity";
+            this.textBoxQuantity.Size = new System.Drawing.Size(51, 22);
+            this.textBoxQuantity.TabIndex = 8;
+            // 
             // UserControlAccount
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -272,5 +292,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn Title;
         private System.Windows.Forms.Label labelTitle;
+        private System.Windows.Forms.TextBox textBoxQuantity;
+        private System.Windows.Forms.Label labelQuantity;
     }
 }

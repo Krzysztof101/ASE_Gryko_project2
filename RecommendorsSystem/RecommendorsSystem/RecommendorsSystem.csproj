@@ -66,6 +66,12 @@
     <Compile Include="FormBookstore.Designer.cs">
       <DependentUpon>FormBookstore.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormViewBook.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormViewBook.Designer.cs">
+      <DependentUpon>FormViewBook.cs</DependentUpon>
+    </Compile>
     <Compile Include="IAccountFunctions.cs" />
     <Compile Include="IAccountSearchSharedFunctions.cs" />
     <Compile Include="ICategoriesSharedFunctions.cs" />
@@ -126,6 +132,9 @@
     </Compile>
     <EmbeddedResource Include="FormBookstore.resx">
       <DependentUpon>FormBookstore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormViewBook.resx">
+      <DependentUpon>FormViewBook.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

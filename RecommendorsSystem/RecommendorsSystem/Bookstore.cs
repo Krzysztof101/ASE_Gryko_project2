@@ -211,9 +211,24 @@ namespace BookstorePackage
             databaseFunctions.addCategoryToLiked(newLikedCategory, User);
         }
 
-        public void buyBook(BookGeneralData bookToBuy)
+        public string buyBook(BookGeneralData bookToBuy, int quantity)
         {
-            databaseFunctions.buyBook(bookToBuy, User);
+            if(bookToBuy.Deleted)
+            {
+                return "Unable to buy unavailable book";
+            }
+
+            if(quantity<=0 || quantity > bookToBuy.Quantity)
+            {
+                return "Quantity must be integer value greater than 0 and lesser or equal than number of books available (" +bookToBuy.Quantity.ToString()+")" ;
+            }
+
+            databaseFunctions.buyBook(bookToBuy, User,quantity);
+            return operationSuccesful();
+        }
+        public string operationSuccesful()
+        {
+            return "";
         }
 
         /*
@@ -232,7 +247,7 @@ namespace BookstorePackage
             return scoreModules;
         }
     */
-        public LinkedList<BookWithAuthorsAndScore> askForRecommendations()
+        public LinkedList<BookWithCategoriesAuthorsAndScore> askForRecommendations()
         {
             return recommendationsGenerator.generateRecommendations(User);
         }
@@ -322,7 +337,7 @@ namespace BookstorePackage
             User.logout();
         }
 
-        public LinkedList<BookWithAuthors> searchByAuthor(string onlyLettersPhrase)
+        public LinkedList<BookWithAuthorsAndCategories> searchByAuthor(string onlyLettersPhrase)
         {
             return databaseFunctions.findBooksByAuthor(onlyLettersPhrase, User);
         }
@@ -341,7 +356,7 @@ namespace BookstorePackage
             return databaseFunctions.tryToLogin(login, password, User);
         }
 
-        public LinkedList<BookWithAuthors> searchByTitle(string title)
+        public LinkedList<BookWithAuthorsAndCategories> searchByTitle(string title)
         {
             return databaseFunctions.findBooksByTitle(title,User);
         }

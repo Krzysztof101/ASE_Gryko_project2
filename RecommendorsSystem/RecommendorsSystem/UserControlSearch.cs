@@ -33,7 +33,7 @@ namespace RecommendorsSystem
                 return cellSelected() && dgv.CurrentCell.Value != null;
             }
             
-            public void fillWithSearchResults(LinkedList<BookWithAuthors> books)
+            public void fillWithSearchResults(LinkedList<BookWithAuthorsAndCategories> books)
             {
                 dgv.Rows.Clear();
                 dgv.Columns[1].Visible = true;
@@ -45,7 +45,7 @@ namespace RecommendorsSystem
                     dgv.Rows.Add(bookTitle, bookAuthor);
                 }
             }
-            public void fillWithRecommendations(LinkedList<BookWithAuthorsAndScore> books )
+            public void fillWithRecommendations(LinkedList<BookWithCategoriesAuthorsAndScore> books )
             {
                 dgv.Rows.Clear();
                 dgv.Columns[1].Visible = false;
@@ -62,7 +62,7 @@ namespace RecommendorsSystem
                     dgv.Rows.Add(bookTitle, bookAuthor, bookScore);
                 }
                 */
-                foreach (BookWithAuthorsAndScore b in books)
+                foreach (BookWithCategoriesAuthorsAndScore b in books)
                 {
                     int score = b.Score;
                     BookInfoContainer bookTitle = new BookContainerTitle(b);
@@ -75,13 +75,13 @@ namespace RecommendorsSystem
                 
             }
 
-            public BookWithAuthors getSelectedBook()
+            public BookWithAuthorsAndCategories getSelectedBook()
             {
                 if (cellSelectedAndContainsValue())
                 {
                     try
                     {
-                        BookWithAuthors toReturn = (dgv.CurrentCell.Value as BookInfoContainer).book;
+                        BookWithAuthorsAndCategories toReturn = (dgv.CurrentCell.Value as BookInfoContainer).book;
                         return toReturn;
                     }
                     catch (Exception e)
@@ -141,7 +141,7 @@ namespace RecommendorsSystem
         {
             
 
-            LinkedList<BookWithAuthors> results;//=new LinkedList<Book>();
+            LinkedList<BookWithAuthorsAndCategories> results;//=new LinkedList<Book>();
             string searchPhrase = textBoxSearch.Text;
             if(comboBoxTitleAuthor.SelectedIndex==0)
             {
@@ -243,7 +243,7 @@ namespace RecommendorsSystem
 
         private void buttonSaveInToBuy_Click(object sender, EventArgs e)
         {
-            BookWithAuthors currentBook = guiManager.getSelectedBook();
+            BookWithAuthorsAndCategories currentBook = guiManager.getSelectedBook();
             if(currentBook!=null)
             {
                 searchFunctions.saveBookInToBuy(currentBook);
@@ -252,16 +252,18 @@ namespace RecommendorsSystem
 
         private void buttonViewBook_Click(object sender, EventArgs e)
         {
-            BookWithAuthors currentBook = guiManager.getSelectedBook();
+            BookWithAuthorsAndCategories currentBook = guiManager.getSelectedBook();
             if(currentBook!=null)
             {
                 searchFunctions.viewBook(currentBook);
+                FormViewBook f = new FormViewBook(currentBook);
+                f.Show();
             }
         }
 
         private void buttonAskRecoms_Click(object sender, EventArgs e)
         {
-            LinkedList<BookWithAuthorsAndScore> books = searchFunctions.askForRecommendations();
+            LinkedList<BookWithCategoriesAuthorsAndScore> books = searchFunctions.askForRecommendations();
             guiManager.fillWithRecommendations(books);
         }
 
@@ -272,10 +274,27 @@ namespace RecommendorsSystem
 
         private void buttonBuy_Click(object sender, EventArgs e)
         {
-            BookWithAuthors currentBook = guiManager.getSelectedBook();
+            BookWithAuthorsAndCategories currentBook = guiManager.getSelectedBook();
             if (currentBook != null)
             {
-                searchFunctions.buyBook(currentBook);
+                int quantity = 0;
+                try { 
+                    quantity = Convert.ToInt32(textBoxQuantity.Text);
+                }
+                catch(Exception)
+                {
+                    MessageBox.Show("quantity must be integer value between 1 and " + currentBook.Quantity.ToString());
+                }
+
+                string msg = searchFunctions.buyBook(currentBook,quantity);
+                if(msg != searchFunctions.operationSuccesful())
+                {
+                    MessageBox.Show(msg);
+                }
+                else
+                {
+                    currentBook.Quantity -= quantity;
+                }
             }
         }
     }

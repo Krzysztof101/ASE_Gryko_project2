@@ -21,10 +21,10 @@ namespace RecommendorsSystem
         LinkedList<string> getAllCategories();
         LinkedList<string> getLikedCategories(CurrentUser user);
         //bool checkIfCredentialsAreValid(string login, string password);
-        LinkedList<BookWithAuthors> findBooksByTitle(string title, CurrentUser user);
-        LinkedList<BookWithAuthors> findBooksByAuthor(string authors, CurrentUser user);
+        LinkedList<BookWithAuthorsAndCategories> findBooksByTitle(string title, CurrentUser user);
+        LinkedList<BookWithAuthorsAndCategories> findBooksByAuthor(string authors, CurrentUser user);
         int getBookRate(BookGeneralData currentBook, CurrentUser user);
-        LinkedList<BookWithAuthors> getAllBookWithAuthors(CurrentUser user);
+        LinkedList<BookWithAuthorsAndCategories> getAllBookWithAuthors(CurrentUser user);
     }
     public interface IRecommendationsGetters :IDatabaseGetters
     {
@@ -45,7 +45,7 @@ namespace RecommendorsSystem
         void unrate(BookGeneralData book, CurrentUser user);
         void saveBookInToBuy(BookGeneralData book, CurrentUser user);
         void removeBookfromToBuy(BookGeneralData book, CurrentUser user);
-        void buyBook(BookGeneralData book, CurrentUser user);
+        void buyBook(BookGeneralData book, CurrentUser user, int quantity);
         void addCategoryToLiked(string category, CurrentUser user);
         void removeCategoryFromLiked(string category, CurrentUser user);
         void viewBook(BookGeneralData book, CurrentUser user);

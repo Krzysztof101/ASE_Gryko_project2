@@ -51,22 +51,22 @@ namespace RecommendorsSystem
 
 
 
-        public LinkedList<BookWithAuthorsAndScore> generateRecommendations(CurrentUser user)
+        public LinkedList<BookWithCategoriesAuthorsAndScore> generateRecommendations(CurrentUser user)
         {
-            LinkedList<BookWithAuthors> AllBooksWithAuthors = recommendationsFunctions.getAllBookWithAuthors(user);
-            BookWithAuthorsAndScore[] booksWithAuthoresAndScore = new BookWithAuthorsAndScore[AllBooksWithAuthors.Count];
+            LinkedList<BookWithAuthorsAndCategories> AllBooksWithAuthors = recommendationsFunctions.getAllBookWithAuthors(user);
+            BookWithCategoriesAuthorsAndScore[] booksWithAuthoresAndScore = new BookWithCategoriesAuthorsAndScore[AllBooksWithAuthors.Count];
             int i = 0;
             foreach (Book book in AllBooksWithAuthors)
             {
                 //BookWithAuthorsAndScore bookAuScr = new BookWithAuthorsAndScore(book as BookWithAuthors);
-                BookWithAuthorsAndScore bookAuScr = new Book(book);
+                BookWithCategoriesAuthorsAndScore bookAuScr = new Book(book);
                 bookAuScr.Score = calculateScoreForBook(book, user);
                 booksWithAuthoresAndScore[i++] = bookAuScr;
             }
             return buildScoreSortedBooksList(booksWithAuthoresAndScore);
         }
 
-        private LinkedList<BookWithAuthorsAndScore> buildScoreSortedBooksList(BookWithAuthorsAndScore[] booksWithAuthoresAndScore)
+        private LinkedList<BookWithCategoriesAuthorsAndScore> buildScoreSortedBooksList(BookWithCategoriesAuthorsAndScore[] booksWithAuthoresAndScore)
         {
             /*
             int smallest = int.MaxValue;
@@ -93,8 +93,8 @@ namespace RecommendorsSystem
             return sortdList;
             */
             QuickSort(booksWithAuthoresAndScore, 0, booksWithAuthoresAndScore.Length - 1);
-            LinkedList<BookWithAuthorsAndScore> sortdList = new LinkedList<BookWithAuthorsAndScore>();
-            foreach(BookWithAuthorsAndScore b in booksWithAuthoresAndScore)
+            LinkedList<BookWithCategoriesAuthorsAndScore> sortdList = new LinkedList<BookWithCategoriesAuthorsAndScore>();
+            foreach(BookWithCategoriesAuthorsAndScore b in booksWithAuthoresAndScore)
             {
                 sortdList.AddLast(b);
             }
@@ -102,11 +102,11 @@ namespace RecommendorsSystem
 
         }
 
-        void QuickSort(BookWithAuthorsAndScore[] booksWithAuthoresAndScore, int left, int right) 
+        void QuickSort(BookWithCategoriesAuthorsAndScore[] booksWithAuthoresAndScore, int left, int right) 
         {
             int i = left;
             int j = right;
-            BookWithAuthorsAndScore x;
+            BookWithCategoriesAuthorsAndScore x;
 
             x = booksWithAuthoresAndScore[(left + right) >> 1];
             do
@@ -126,9 +126,9 @@ namespace RecommendorsSystem
             if (right > i) QuickSort(booksWithAuthoresAndScore, i, right);
         }
 
-        void Swap(BookWithAuthorsAndScore[] list, int left, int right)
+        void Swap(BookWithCategoriesAuthorsAndScore[] list, int left, int right)
         {
-            BookWithAuthorsAndScore temp = list[left];
+            BookWithCategoriesAuthorsAndScore temp = list[left];
             list[left] = list[right];
             list[right] = temp;
         }
@@ -136,7 +136,7 @@ namespace RecommendorsSystem
 
 
 
-        private int calculateScoreForBook(BookWithAuthors bookWithAuthors, CurrentUser user)
+        private int calculateScoreForBook(BookWithAuthorsAndCategories bookWithAuthors, CurrentUser user)
         {
 
             int score = 0;

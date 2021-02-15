@@ -45,6 +45,8 @@
             this.buttonSearch = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBoxTitleAuthor = new System.Windows.Forms.ComboBox();
+            this.textBoxQuantity = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBooks)).BeginInit();
             this.SuspendLayout();
@@ -67,6 +69,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.textBoxQuantity);
             this.panel1.Controls.Add(this.buttonAccount);
             this.panel1.Controls.Add(this.buttonAskRecoms);
             this.panel1.Controls.Add(this.buttonViewBook);
@@ -109,9 +113,9 @@
             // buttonViewBook
             // 
             this.buttonViewBook.AutoSize = true;
-            this.buttonViewBook.Location = new System.Drawing.Point(475, 143);
+            this.buttonViewBook.Location = new System.Drawing.Point(475, 163);
             this.buttonViewBook.Name = "buttonViewBook";
-            this.buttonViewBook.Size = new System.Drawing.Size(106, 27);
+            this.buttonViewBook.Size = new System.Drawing.Size(126, 27);
             this.buttonViewBook.TabIndex = 11;
             this.buttonViewBook.Text = "view book";
             this.buttonViewBook.UseVisualStyleBackColor = true;
@@ -120,9 +124,9 @@
             // buttonSaveInToBuy
             // 
             this.buttonSaveInToBuy.AutoSize = true;
-            this.buttonSaveInToBuy.Location = new System.Drawing.Point(475, 109);
+            this.buttonSaveInToBuy.Location = new System.Drawing.Point(475, 129);
             this.buttonSaveInToBuy.Name = "buttonSaveInToBuy";
-            this.buttonSaveInToBuy.Size = new System.Drawing.Size(106, 27);
+            this.buttonSaveInToBuy.Size = new System.Drawing.Size(126, 27);
             this.buttonSaveInToBuy.TabIndex = 10;
             this.buttonSaveInToBuy.Text = "save in to buy";
             this.buttonSaveInToBuy.UseVisualStyleBackColor = true;
@@ -131,7 +135,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(472, 82);
+            this.label3.Location = new System.Drawing.Point(472, 102);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(33, 17);
             this.label3.TabIndex = 9;
@@ -140,18 +144,18 @@
             // comboBoxRate
             // 
             this.comboBoxRate.FormattingEnabled = true;
-            this.comboBoxRate.Location = new System.Drawing.Point(511, 79);
+            this.comboBoxRate.Location = new System.Drawing.Point(511, 95);
             this.comboBoxRate.Name = "comboBoxRate";
-            this.comboBoxRate.Size = new System.Drawing.Size(70, 24);
+            this.comboBoxRate.Size = new System.Drawing.Size(90, 24);
             this.comboBoxRate.TabIndex = 8;
             this.comboBoxRate.SelectedIndexChanged += new System.EventHandler(this.comboBoxRate_SelectedIndexChanged);
             // 
             // buttonBuy
             // 
             this.buttonBuy.AutoSize = true;
-            this.buttonBuy.Location = new System.Drawing.Point(472, 46);
+            this.buttonBuy.Location = new System.Drawing.Point(536, 66);
             this.buttonBuy.Name = "buttonBuy";
-            this.buttonBuy.Size = new System.Drawing.Size(109, 27);
+            this.buttonBuy.Size = new System.Drawing.Size(65, 27);
             this.buttonBuy.TabIndex = 6;
             this.buttonBuy.Text = "buy";
             this.buttonBuy.UseVisualStyleBackColor = true;
@@ -230,6 +234,22 @@
             this.comboBoxTitleAuthor.Size = new System.Drawing.Size(121, 24);
             this.comboBoxTitleAuthor.TabIndex = 2;
             // 
+            // textBoxQuantity
+            // 
+            this.textBoxQuantity.Location = new System.Drawing.Point(475, 68);
+            this.textBoxQuantity.Name = "textBoxQuantity";
+            this.textBoxQuantity.Size = new System.Drawing.Size(55, 22);
+            this.textBoxQuantity.TabIndex = 14;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(472, 46);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(58, 17);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "quantity";
+            // 
             // UserControlSearch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -263,5 +283,7 @@
         private System.Windows.Forms.Button buttonSearch;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBoxTitleAuthor;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBoxQuantity;
     }
 }

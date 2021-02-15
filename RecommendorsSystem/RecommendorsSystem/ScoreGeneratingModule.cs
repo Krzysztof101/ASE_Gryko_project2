@@ -509,7 +509,7 @@ namespace RecommendorsSystem
 
                 int recentlySearchedCategs = 0;
                 LinkedList<string> bookCategs = dbPackingClass.getBookCategories(book);
-                foreach (BookWithAuthors b in books)
+                foreach (BookWithAuthorsAndCategories b in books)
                 {
                     LinkedList<string> secondBookCategs = dbPackingClass.getBookCategories(b);
                     foreach (string categ in bookCategs)

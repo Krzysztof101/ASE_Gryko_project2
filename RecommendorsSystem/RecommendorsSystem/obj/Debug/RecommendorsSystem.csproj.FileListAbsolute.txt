@@ -45,3 +45,4 @@ C:\Users\m\Desktop\Studia\semestr5\ASE_remote2\ASE_Gryko_project2\RecommendorsSy
 C:\Users\m\Desktop\Studia\semestr5\ASE_remote2\ASE_Gryko_project2\RecommendorsSystem\RecommendorsSystem\obj\Debug\RecommendorsSystem.csproj.CoreCompileInputs.cache
 C:\Users\m\Desktop\Studia\semestr5\ASE_remote2\ASE_Gryko_project2\RecommendorsSystem\RecommendorsSystem\obj\Debug\RecommendorsSystem.exe
 C:\Users\m\Desktop\Studia\semestr5\ASE_remote2\ASE_Gryko_project2\RecommendorsSystem\RecommendorsSystem\obj\Debug\RecommendorsSystem.pdb
+C:\Users\m\Desktop\Studia\semestr5\ASE_remote2\ASE_Gryko_project2\RecommendorsSystem\RecommendorsSystem\obj\Debug\RecommendorsSystem.FormViewBook.resources

@@ -9,10 +9,11 @@ namespace RecommendorsSystem
     public interface IAccountSearchSharedFunctions
     {
 
-        void buyBook(BookGeneralData bookToBuy);
+        string buyBook(BookGeneralData bookToBuy, int quantity);
         void setBookRate(BookGeneralData bookToRate, int rate);
         int getBookRate(BookGeneralData book);
         void unrateBook(BookGeneralData bookToUnrate);
-
+        string operationSuccesful();
     }
+   
 }

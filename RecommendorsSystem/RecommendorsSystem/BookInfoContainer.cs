@@ -8,9 +8,9 @@ namespace RecommendorsSystem
 {
     class BookInfoContainer
     {
-        public BookInfoContainer(BookWithAuthors b)
+        public BookInfoContainer(BookWithAuthorsAndCategories b)
         { book = b; }
-        public BookWithAuthors book { get; set; }
+        public BookWithAuthorsAndCategories book { get; set; }
         public override string ToString()
         {
             return book.id.ToString() + ", " + book.title + ", " + book.price.ToString() + ", " + book.priceMinusDiscountInProcent.ToString();
@@ -18,7 +18,7 @@ namespace RecommendorsSystem
     }
     class BookContainerTitle :BookInfoContainer
     {
-        public BookContainerTitle(BookWithAuthors b) :base(b)
+        public BookContainerTitle(BookWithAuthorsAndCategories b) :base(b)
         { }
         public override string ToString()
         {
@@ -27,7 +27,7 @@ namespace RecommendorsSystem
     }
     class BookContainerId : BookInfoContainer
     {
-        public BookContainerId(BookWithAuthors b) :base(b)
+        public BookContainerId(BookWithAuthorsAndCategories b) :base(b)
         { }
         public override string ToString()
         {
@@ -36,7 +36,7 @@ namespace RecommendorsSystem
     }
     class BookContainerScore : BookInfoContainer
     {
-        public BookContainerScore(int bookScore, BookWithAuthors b) : base(b)
+        public BookContainerScore(int bookScore, BookWithAuthorsAndCategories b) : base(b)
         { score = bookScore; }
         int score;
         public override string ToString()
@@ -47,7 +47,7 @@ namespace RecommendorsSystem
 
     class BookContainerAuthors : BookInfoContainer
     {
-        public BookContainerAuthors( BookWithAuthors b) : base(b)
+        public BookContainerAuthors( BookWithAuthorsAndCategories b) : base(b)
         { 
             LinkedList<Author> authors = b.Authors;
             string authorsConcated = "";
