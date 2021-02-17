@@ -275,26 +275,34 @@ namespace RecommendorsSystem
         private void buttonBuy_Click(object sender, EventArgs e)
         {
             BookWithAuthorsAndCategories currentBook = guiManager.getSelectedBook();
+            if(currentBook == null)
+            {
+                MessageBox.Show("Select book");
+                return;
+            }
+            string msg = "";
             if (currentBook != null)
             {
                 int quantity = 0;
                 try { 
                     quantity = Convert.ToInt32(textBoxQuantity.Text);
+                    msg = searchFunctions.buyBook(currentBook, quantity);
+
                 }
                 catch(Exception)
                 {
-                    MessageBox.Show("quantity must be integer value between 1 and " + currentBook.Quantity.ToString());
                 }
+                
 
-                string msg = searchFunctions.buyBook(currentBook,quantity);
-                if(msg != searchFunctions.operationSuccesful())
-                {
-                    MessageBox.Show(msg);
-                }
-                else
+                if (msg == searchFunctions.operationSuccesful())
                 {
                     currentBook.Quantity -= quantity;
                 }
+                else
+                {
+                    MessageBox.Show(msg);
+                }
+
             }
         }
     }
